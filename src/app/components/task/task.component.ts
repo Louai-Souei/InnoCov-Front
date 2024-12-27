@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {TaskService} from "../../services/task-service.service";
-import {Task} from "../../entity/Task";
 
 @Component({
   selector: 'app-task',

@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {Task} from "../entity/Task";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {HttpClient} from "@angular/common/http";
 import {AppSettings} from "../settings/app-settings";
 
