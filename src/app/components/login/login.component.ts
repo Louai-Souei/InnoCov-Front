@@ -21,7 +21,7 @@ export class LoginComponent {
     this.authenticationService.login(this.loginRequest).subscribe({
       next: (data : AuthenticationResponse) => {
         this.authenticationService.setToken(data.access_token)
-        this.router.navigate(['tasks'])
+        this.router.navigate(['user/tasks'])
       },
       error: () => console.log("error Login"),
       complete: () => console.log("complete")

@@ -28,13 +28,19 @@ export class AuthenticationService {
     localStorage.removeItem(this.token);
   }
 
-  login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
-    return this.http.post<AuthenticationResponse>(this.apiUrl + "login", request);
-  }
-
   register(request: RegisterRequest): Observable<AuthenticationResponse> {
     console.log(request);
     return this.http.post<AuthenticationResponse>(this.apiUrl + "register", request);
   }
+
+  login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
+    return this.http.post<AuthenticationResponse>(this.apiUrl + "login", request);
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(this.apiUrl + "logout", {});
+  }
+
+
 }
 

@@ -12,19 +12,15 @@
       <th style="width:17%">Title</th>
       <th style="width:17%">Duration</th>
       <th style="width:17%">Description</th>
-      <th style="width:15%">Priority</th>
-      <th style="width:17%">Status</th>
-      <th style="width:17%">Assignee</th>
+
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-task>
     <tr>
       <td>{{ task.description }}</td>
       <td>{{ task.complainer.email }}</td>
-      <td>{{ task.description }}</td>
-      <td>{{ task.priority }}</td>
-      <td>{{ task.status }}</td>
-      <td>{{ task.assignee.name }}</td>
+      <td>{{ task.targetUser.email }}</td>
+
     </tr>
   </ng-template>
   <ng-template pTemplate="paginatorleft">

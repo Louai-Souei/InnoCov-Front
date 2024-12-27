@@ -24,12 +24,17 @@ import {ToastModule} from "primeng/toast";
 import {PasswordModule} from "primeng/password";
 import { RegisterComponent } from './components/register/register.component';
 import {DropdownModule} from "primeng/dropdown";
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import {SidebarModule} from "primeng/sidebar";
 import {AvatarModule} from "primeng/avatar";
 import {Ripple} from "primeng/ripple";
 import {StyleClassModule} from "primeng/styleclass";
 import {MenubarModule} from "primeng/menubar";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import { UserLayoutComponent } from './components/user-layout/user-layout.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,7 @@ import {MenubarModule} from "primeng/menubar";
     TaskComponent,
     LoginComponent,
     RegisterComponent,
-    SidebarComponent,
+    UserLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +65,11 @@ import {MenubarModule} from "primeng/menubar";
     Ripple,
     StyleClassModule,
     MenubarModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [
 //    provideHttpClient(withInterceptors([authInterceptorInterceptor])),

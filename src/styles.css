@@ -17,4 +17,101 @@ router-outlet {
   padding: 20px;
 }
 
+/* Flex contents */
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-space-evenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: start;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: end;
+}
+
+.flex-end img {
+  cursor: pointer;
+}
+
+/* Scroll bar */
+
+::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+  margin-top: .5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1ex;
+  background-color: grey;
+}
+
+body {
+  background-color: #FFFFFF;
+  border-radius: .5rem;
+}
+
+*{
+  scrollbar-color: grey transparent;
+}
+
+body .col-1, body .col-2,body .col-3,body .col-4,body .col-5,body .col-6,
+body .col-7, body .col-8, body .col-9, body .col-10, body .col-11, body .col-12 {
+  padding: 0;
+  margin: 0;
+}
+
+body .col-12{
+  padding: .5rem 0 0 0;
+  height: fit-content;
+}
+
+body .grid{
+  margin: 0;
+}
+body h1{
+  color: black;
+}
+
+.flex-center{
+  justify-content: center;
+}
+
+body .p-disabled, .p-component:disabled{
+  opacity: 0.6;
+}
+
+body .p-field .p-multiselect-label-container{
+  width: 11rem;
+  height: 2rem;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: black;
+  background: #c7cde3;
+}
 
