@@ -1,0 +1,141 @@
+<div class="flex justify-content-center align-items-center min-h-screen">
+  <p-card header="Register" [style]="{ width: '400px' }">
+    <form #registerForm="ngForm" (ngSubmit)="registerUser()">
+      <!-- Firstname -->
+      <div class="field">
+        <label for="firstname">Firstname</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="registerRequest.firstname"
+          class="w-full"
+          id="firstname"
+          name="firstname"
+          #firstname="ngModel"
+          required
+        />
+        <small class="p-error" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+          Firstname is required
+        </small>
+      </div>
+
+      <!-- Lastname -->
+      <div class="field">
+        <label for="lastname">Lastname</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="registerRequest.lastname"
+          class="w-full"
+          id="lastname"
+          name="lastname"
+          #lastname="ngModel"
+          required
+        />
+        <small class="p-error" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+          Lastname is required
+        </small>
+      </div>
+
+      <!-- Phone -->
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="registerRequest.phone"
+          class="w-full"
+          id="phone"
+          name="phone"
+          #phone="ngModel"
+          required
+        />
+        <small class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+          Phone is required
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          pInputText
+          [(ngModel)]="registerRequest.email"
+          class="w-full"
+          id="email"
+          name="email"
+          #email="ngModel"
+          required
+        />
+        <small class="p-error" *ngIf="email.invalid && (email.dirty || email.touched)">
+          Email is required
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label>Password</label>
+        <p-password
+          [(ngModel)]="registerRequest.password"
+          [feedback]="false"
+          [toggleMask]="true"
+          class="w-full"
+          inputId="password"
+          name="password"
+          #password="ngModel"
+          required
+        ></p-password>
+        <small class="p-error" *ngIf="password.invalid && (password.dirty || password.touched)">
+          Password is required
+        </small>
+      </div>
+
+      <!-- User Role -->
+      <div class="field">
+        <label for="userRole">User Role</label>
+        <p-dropdown
+          [(ngModel)]="registerRequest.userRole"
+          [options]="userRoles"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+          id="userRole"
+          name="userRole"
+          #userRole="ngModel"
+          required
+        ></p-dropdown>
+        <small class="p-error" *ngIf="userRole.invalid && (userRole.dirty || userRole.touched)">
+          User Role is required
+        </small>
+      </div>
+
+      <!-- Role -->
+      <div class="field">
+        <label for="role">Role</label>
+        <p-dropdown
+          [(ngModel)]="registerRequest.role"
+          [options]="roles"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+          id="role"
+          name="role"
+          #role="ngModel"
+          required
+        ></p-dropdown>
+        <small class="p-error" *ngIf="role.invalid && (role.dirty || role.touched)">
+          Role is required
+        </small>
+      </div>
+
+      <!-- Submit Button -->
+      <p-button
+        label="Register"
+        styleClass="w-full"
+        [disabled]="registerForm.invalid"
+        type="submit"
+      ></p-button>
+    </form>
+  </p-card>
+</div>
