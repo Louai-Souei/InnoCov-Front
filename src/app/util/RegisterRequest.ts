@@ -4,6 +4,6 @@ export class RegisterRequest {
   phone!: string;
   email!: string;
   password!: string;
-  userRole!: string;
   role!: string;
+  occupation!: string;
 }

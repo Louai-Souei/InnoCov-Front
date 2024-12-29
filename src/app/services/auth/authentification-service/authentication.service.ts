@@ -13,8 +13,9 @@ export class AuthenticationService {
   apiUrl: string = AppSettings.API_ENDPOINT + 'auth/';
   private token: string = 'authToken';
   private userId: string = 'userId';
-  private userRole: string = 'userRole';
+  private role: string = 'role';
   private email: string = 'email';
+  private occupation: string = 'occupation';
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +27,8 @@ export class AuthenticationService {
   private setUserExtraInformations(data: AuthenticationResponse) {
     localStorage.setItem(this.userId, String(data.userId));
     localStorage.setItem(this.email, data.email);
-    localStorage.setItem(this.userRole, data.userRole);
+    localStorage.setItem(this.role, data.role);
+    localStorage.setItem(this.occupation, data.occupation);
   }
 
   setToken(token: string): void {

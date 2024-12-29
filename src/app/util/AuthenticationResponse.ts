@@ -2,6 +2,7 @@ export class AuthenticationResponse {
   access_token!: string;
   refresh_token!: string
   userId!: number
-  userRole!: string
+  role!: string
   email!: string
+  occupation!: string
 }

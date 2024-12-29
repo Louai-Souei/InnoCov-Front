@@ -91,25 +91,6 @@
         </small>
       </div>
 
-      <!-- User Role -->
-      <div class="field">
-        <label for="userRole">User Role</label>
-        <p-dropdown
-          [(ngModel)]="registerRequest.userRole"
-          [options]="userRoles"
-          optionLabel="label"
-          optionValue="value"
-          class="w-full"
-          id="userRole"
-          name="userRole"
-          #userRole="ngModel"
-          required
-        ></p-dropdown>
-        <small class="p-error" *ngIf="userRole.invalid && (userRole.dirty || userRole.touched)">
-          User Role is required
-        </small>
-      </div>
-
       <!-- Role -->
       <div class="field">
         <label for="role">Role</label>
@@ -126,6 +107,25 @@
         ></p-dropdown>
         <small class="p-error" *ngIf="role.invalid && (role.dirty || role.touched)">
           Role is required
+        </small>
+      </div>
+
+      <!-- Occupation -->
+      <div class="field">
+        <label for="occupation">Role</label>
+        <p-dropdown
+          [(ngModel)]="registerRequest.occupation"
+          [options]="occupations"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+          id="occupation"
+          name="occupation"
+          #occupation="ngModel"
+          required
+        ></p-dropdown>
+        <small class="p-error" *ngIf="occupation.invalid && (occupation.dirty || occupation.touched)">
+          Occupation
         </small>
       </div>
 
