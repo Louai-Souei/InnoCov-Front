@@ -3,18 +3,31 @@ import { AppSettings } from "../../../settings/app-settings";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthenticationRequest } from "../../../util/AuthenticationRequest";
-import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
-import {RegisterRequest} from "../../../util/RegisterRequest";
+import { AuthenticationResponse } from "../../../util/AuthenticationResponse";
+import { RegisterRequest } from "../../../util/RegisterRequest";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   apiUrl: string = AppSettings.API_ENDPOINT + 'auth/';
-  private token = 'authToken';
+  private token: string = 'authToken';
+  private userId: string = 'userId';
+  private userRole: string = 'userRole';
+  private email: string = 'email';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  setUserInformations(data: AuthenticationResponse): void {
+    this.setToken(data.access_token);
+    this.setUserExtraInformations(data);
+  }
+
+  private setUserExtraInformations(data: AuthenticationResponse) {
+    localStorage.setItem(this.userId, String(data.userId));
+    localStorage.setItem(this.email, data.email);
+    localStorage.setItem(this.userRole, data.userRole);
+  }
 
   setToken(token: string): void {
     localStorage.setItem(this.token, token);
@@ -24,12 +37,11 @@ export class AuthenticationService {
     return localStorage.getItem(this.token);
   }
 
-  clearToken(): void {
-    localStorage.removeItem(this.token);
+  clearLocalStorage(): void {
+    localStorage.clear();
   }
 
   register(request: RegisterRequest): Observable<AuthenticationResponse> {
-    console.log(request);
     return this.http.post<AuthenticationResponse>(this.apiUrl + "register", request);
   }
 
@@ -40,7 +52,4 @@ export class AuthenticationService {
   logout(): Observable<void> {
     return this.http.post<void>(this.apiUrl + "logout", {});
   }
-
-
 }
-

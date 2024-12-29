@@ -20,7 +20,7 @@ export class LoginComponent {
   loginUser() : void {
     this.authenticationService.login(this.loginRequest).subscribe({
       next: (data : AuthenticationResponse) => {
-        this.authenticationService.setToken(data.access_token)
+        this.authenticationService.setUserInformations(data)
         this.router.navigate(['user/tasks'])
       },
       error: () => console.log("error Login"),

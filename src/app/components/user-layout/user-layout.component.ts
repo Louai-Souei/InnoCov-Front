@@ -15,7 +15,7 @@ export class UserLayoutComponent {
   logOutUser(): void {
     this.authService.logout().subscribe({
       next: () => {
-        this.authService.clearToken();
+        this.authService.clearLocalStorage();
         this.router.navigate(['/']);
       },
       error: () => {
