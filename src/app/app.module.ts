@@ -1,28 +1,23 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {ButtonDirective, ButtonModule} from 'primeng/button';
 import {TableModule} from "primeng/table";
-import { TaskComponent } from './components/task/task.component';
-import { InputNumberModule} from "primeng/inputnumber";
+import {TaskComponent} from './components/task/task.component';
+import {InputNumberModule} from "primeng/inputnumber";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withFetch,
-  withInterceptorsFromDi
-} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { LoginComponent } from './components/login/login.component';
+import {LoginComponent} from './components/login/login.component';
 import {AuthInterceptorService} from "./services/auth/interceptor/auth-interceptor.service";
 import {CardModule} from "primeng/card";
 import {DividerModule} from "primeng/divider";
 import {ToastModule} from "primeng/toast";
 import {PasswordModule} from "primeng/password";
-import { RegisterComponent } from './components/register/register.component';
+import {RegisterComponent} from './components/register/register.component';
 import {DropdownModule} from "primeng/dropdown";
 import {SidebarModule} from "primeng/sidebar";
 import {AvatarModule} from "primeng/avatar";
@@ -34,7 +29,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
-import { UserLayoutComponent } from './components/user-layout/user-layout.component';
+import {UserLayoutComponent} from './components/user-layout/user-layout.component';
+import {MessagingComponent} from './components/messaging/messaging.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +39,7 @@ import { UserLayoutComponent } from './components/user-layout/user-layout.compon
     LoginComponent,
     RegisterComponent,
     UserLayoutComponent,
+    MessagingComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,4 +75,13 @@ import { UserLayoutComponent } from './components/user-layout/user-layout.compon
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+/*  constructor(private webSocketService: WebSocketService) {}
+
+
+  ngOnInit(): void {
+    this.webSocketService.connect();
+  }*/
+
+}

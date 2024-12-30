@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './services/auth/guard/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { UserLayoutComponent } from './components/user-layout/user-layout.component';
+import {MessagingComponent} from "./components/messaging/messaging.component";
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'tasks', component: TaskComponent },
       { path: 'profile', component: LoginComponent },
       { path: 'about', component: RegisterComponent },
+      { path: 'messaging', component: MessagingComponent },
     ],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }

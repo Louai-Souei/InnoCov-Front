@@ -1,0 +1,17 @@
+<div class="messaging-container">
+  <div class="messages">
+    <div *ngFor="let msg of messages" class="message">
+      <strong>{{ msg.sender }}</strong>: {{ msg.content }}
+      <small>{{ msg.sentAt | date: 'short' }}</small>
+    </div>
+  </div>
+  <div class="message-input">
+    <input
+      type="text"
+      [(ngModel)]="message"
+      placeholder="Type your message..."
+      (keyup.enter)="sendMessage()"
+    />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>
