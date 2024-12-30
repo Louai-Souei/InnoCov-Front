@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserLayoutComponent } from './user-layout.component';
+import { DriverLayoutComponent } from './driver-layout.component';
 
-describe('UserLayoutComponent', () => {
-  let component: UserLayoutComponent;
-  let fixture: ComponentFixture<UserLayoutComponent>;
+describe('DriverLayoutComponent', () => {
+  let component: DriverLayoutComponent;
+  let fixture: ComponentFixture<DriverLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserLayoutComponent]
+      declarations: [DriverLayoutComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserLayoutComponent);
+    fixture = TestBed.createComponent(DriverLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

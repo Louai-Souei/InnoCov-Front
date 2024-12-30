@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { RegisterRequest } from "../../util/RegisterRequest";
-import { AuthenticationService } from "../../services/auth/authentification-service/authentication.service";
-import { Router } from "@angular/router";
-import { AuthenticationResponse } from "../../util/AuthenticationResponse";
-import {Occupation} from "../../entity/enums/Occupation";
-import {Role} from "../../entity/enums/Role";
+import {Component, OnInit} from '@angular/core';
+import {RegisterRequest} from "../../../util/RegisterRequest";
+import {AuthenticationService} from "../../../services/auth/authentification-service/authentication.service";
+import {Router} from "@angular/router";
+import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
+import {Occupation} from "../../../entity/enums/Occupation";
+import {Role} from "../../../entity/enums/Role";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
   occupations: { label: string; value: string }[] = [];
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loadRoles();
@@ -42,7 +43,12 @@ export class RegisterComponent implements OnInit {
     this.authenticationService.register(this.registerRequest).subscribe({
       next: (data: AuthenticationResponse) => {
         this.authenticationService.setUserInformations(data)
-        this.router.navigate(['user/tasks']);
+        if (data.role == Role.DRIVER)
+          this.router.navigate(['driver/tasks'])
+        if (data.role == Role.PASSENGER)
+          this.router.navigate(['passenger/tasks'])
+        else
+          this.router.navigate(['admin/tasks'])
       },
       error: () => console.log("error Login"),
       complete: () => console.log("complete")

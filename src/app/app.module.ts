@@ -16,13 +16,13 @@ import {
   withInterceptorsFromDi
 } from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/auth/login/login.component';
 import {AuthInterceptorService} from "./services/auth/interceptor/auth-interceptor.service";
 import {CardModule} from "primeng/card";
 import {DividerModule} from "primeng/divider";
 import {ToastModule} from "primeng/toast";
 import {PasswordModule} from "primeng/password";
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import {DropdownModule} from "primeng/dropdown";
 import {SidebarModule} from "primeng/sidebar";
 import {AvatarModule} from "primeng/avatar";
@@ -34,7 +34,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
-import { UserLayoutComponent } from './components/user-layout/user-layout.component';
+import { DriverLayoutComponent } from './layouts/driver-layout/driver-layout.component';
+import { PassengerLayoutComponent } from './layouts/passenger-layout/passenger-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { RoutesComponent } from './components/passenger/routes/routes.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { UserLayoutComponent } from './components/user-layout/user-layout.compon
     TaskComponent,
     LoginComponent,
     RegisterComponent,
-    UserLayoutComponent,
+    DriverLayoutComponent,
+    PassengerLayoutComponent,
+    AdminLayoutComponent,
+    RoutesComponent,
   ],
   imports: [
     BrowserModule,
