@@ -23,21 +23,27 @@
       src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
       alt="Avatar"
     />
-
-    <h4 class="name">User User</h4>
-    <p class="designation">Software Engineer</p>
+    <h4 class="name">Passenger User</h4>
+    <p class="designation">Traveler</p>
 
     <mat-divider></mat-divider>
 
-    <button mat-button class="menu-button" routerLink="/user/tasks">
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
+    <!-- First button for Available Routes -->
+    <button mat-button class="menu-button" routerLink="/passenger/available-routes">
+      <mat-icon>directions_bus</mat-icon> <!-- You can change the icon based on your preference -->
+      <span>Available Routes</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/user/tasks">
+
+    <!-- Other Menu Buttons -->
+    <button mat-button class="menu-button" routerLink="/passenger/profile">
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/user/tasks">
+    <button mat-button class="menu-button" routerLink="/passenger/history">
+      <mat-icon>history</mat-icon>
+      <span>History</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="/passenger/about">
       <mat-icon>info</mat-icon>
       <span>About</span>
     </button>
@@ -49,6 +55,7 @@
       <span>Help</span>
     </button>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <div class="content-box">
       <router-outlet></router-outlet>

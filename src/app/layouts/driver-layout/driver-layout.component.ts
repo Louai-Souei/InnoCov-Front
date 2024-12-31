@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../services/auth/authentification-service/authentication.service';
+import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
 
 @Component({
   selector: 'app-driver-layout',

@@ -1,19 +1,27 @@
-import {Injectable} from '@angular/core';
-import {AppSettings} from "../../settings/app-settings";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { AppSettings } from "../../settings/app-settings";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Route } from "../../entity/Route"
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoutesService {
 
-  apiUrl: string = AppSettings.API_ENDPOINT + 'complaint/complaints-by-complainer';
+  private apiUrl: string = AppSettings.API_ENDPOINT + 'route/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  addRoute(route: Partial<Route>): Observable<{ success: boolean; message: string }> {
+    return this.http.post<{ success: boolean; message: string }>(`${this.apiUrl}new-route`, route);
   }
 
-  getAllTasks(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getRouteInformation(routeId: number): Observable<Route> {
+    return this.http.get<Route>(`${this.apiUrl}route-information/${routeId}`);
+  }
+
+  getAvailableRoutes(): Observable<Route[]> {
+    return this.http.get<Route[]>(`${this.apiUrl}available`);
   }
 }

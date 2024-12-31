@@ -1,0 +1,124 @@
+.route-details {
+  font-family: Arial, sans-serif;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info-item {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.info-title {
+  font-weight: bold;
+  color: #444;
+}
+
+.info-content {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.info-section {
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Driver Information Styling */
+.driver-info {
+  display: flex;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.driver-icon {
+  color: #007ad9;
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.driver-details {
+  flex-grow: 1;
+}
+
+.driver-name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.driver-id {
+  font-size: 1.1em;
+  color: #777;
+}
+
+/* Passengers Information Styling */
+.passenger-list {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 1.1em;
+}
+
+.passenger-list li {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.passenger-icon {
+  margin-right: 10px;
+  color: #007ad9;
+  font-size: 1.5rem;
+}
+
+.passenger-list li i {
+  font-size: 1.3rem;
+  margin-right: 8px;
+}
+/* Classe de base pour tous les boutons */
+.button-base {
+  padding: 0.5rem 1rem; /* Espacement interne */
+  font-size: 0.9rem; /* Taille de police */
+  color: #fff; /* Couleur du texte */
+  border-radius: 5px; /* Arrondi des bords */
+  border: none; /* Enlever les bordures par défaut */
+  cursor: pointer; /* Curseur pointer sur hover */
+}
+
+.button-base:hover {
+  opacity: 0.9; /* Effet sur hover */
+}
+
+/* Couleurs spécifiques pour chaque bouton */
+.view-details-btn {
+  background-color: #007ad9; /* Bleu */
+}
+
+.reserve-btn {
+  align-self: center;
+  justify-content: center;
+  margin-top: 3px;
+  background-color: #28a745; /* Vert */
+}
+
+/* Optionnel : d'autres couleurs si nécessaire */
+.view-details-btn:hover {
+  background-color: #005fa3; /* Couleur bleu sur hover */
+}
+
+.reserve-btn:hover {
+  background-color: #218838; /* Couleur vert sur hover */
+}

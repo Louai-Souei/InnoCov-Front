@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthenticationRequest} from "../../../util/AuthenticationRequest";
-import {AuthenticationService} from "../../../services/auth/authentification-service/authentication.service";
+import {AuthenticationService} from "../../../services/auth/authentication/authentication.service";
 import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
 import {Role} from "../../../entity/enums/Role";
@@ -25,7 +25,7 @@ export class LoginComponent {
         if (data.role == Role.DRIVER)
           this.router.navigate(['driver/tasks'])
         if (data.role == Role.PASSENGER)
-          this.router.navigate(['passenger/tasks'])
+          this.router.navigate(['passenger/available-routes'])
         if (data.role == Role.ADMIN)
           this.router.navigate(['admin/tasks'])
       },

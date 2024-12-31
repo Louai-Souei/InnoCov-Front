@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RegisterRequest} from "../../../util/RegisterRequest";
-import {AuthenticationService} from "../../../services/auth/authentification-service/authentication.service";
+import {AuthenticationService} from "../../../services/auth/authentication/authentication.service";
 import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
 import {Occupation} from "../../../entity/enums/Occupation";
