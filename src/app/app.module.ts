@@ -43,6 +43,8 @@ import {InputIconModule} from "primeng/inputicon";
 import {TagModule} from "primeng/tag";
 import {DialogModule} from "primeng/dialog";
 import {CalendarModule} from "primeng/calendar";
+import {ToastrModule} from "ngx-toastr";
+import { BookedRoutesComponent } from './components/passenger/booked-routes/booked-routes.component';
 
 @NgModule({
   declarations: [
@@ -54,10 +56,17 @@ import {CalendarModule} from "primeng/calendar";
     PassengerLayoutComponent,
     AdminLayoutComponent,
     RoutesComponent,
+    BookedRoutesComponent,
 
   ],
   imports: [
     BrowserModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      timeOut: 5000,
+      progressBar: true,
+      preventDuplicates: true,
+    }),
     AppRoutingModule,
     ButtonModule,
     TableModule,

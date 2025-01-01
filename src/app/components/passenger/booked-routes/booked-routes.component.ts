@@ -4,15 +4,16 @@ import {Route} from "../../../entity/Route";
 import {Table} from 'primeng/table';
 import {AlertService} from "../../../services/utils/alert/alert.service";
 import {RouteBookingService} from "../../../services/route-booking/route-booking.service";
+import {ApiResponse} from "../../../services/utils/models/ApiResponse";
 
 @Component({
-  selector: 'app-routes',
-  templateUrl: './routes.component.html',
-  styleUrls: ['./routes.component.css']
+  selector: 'app-booked-routes',
+  templateUrl: './booked-routes.component.html',
+  styleUrl: './booked-routes.component.css'
 })
-export class RoutesComponent implements OnInit {
+export class BookedRoutesComponent implements OnInit {
 
-  routes: Route[] = [];
+  bookedRoutes: Route[] = [];
   selectedRoute!: Route | null;
   visible: boolean = false;
   loading: boolean = true;
@@ -24,10 +25,10 @@ export class RoutesComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    this.routesService.getAvailableRoutes().subscribe({
-      next: (routes) => {
-        this.routes = routes;
+  ngOnInit(): void {
+    this.routeBookingService.getUserBookedRoutes().subscribe({
+      next: (response: ApiResponse<Route[]>) => {
+        this.bookedRoutes = response.data;
         this.loading = false;
       },
       error: () => {
@@ -35,14 +36,6 @@ export class RoutesComponent implements OnInit {
       }
     });
 
-    this.routeBookingService.getUserBookedRoutes().subscribe({
-      next: (data) => {
-        console.log("----------------------", data)
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
 
   }
 
@@ -66,23 +59,17 @@ export class RoutesComponent implements OnInit {
     this.visible = true;
   }
 
-  filterRemainingSeats(selectedSeats: number | null) {
-    if (selectedSeats !== null) {
-      this.routes = this.routes.filter(route => route.remainingSeats === selectedSeats);
-    } else {
-      this.routesService.getAvailableRoutes().subscribe({
-        next: (routes) => {
-          this.routes = routes;
-        },
-        error: () => {
-        }
-      });
-    }
-  }
-
   reserveRoute(route: any) {
     this.alertService.success('Doctor Data Edited Successfully', 'Done !');
 
 
+  }
+
+  addComplaint(passenger: { id: number; firstname: string; lastname: string }) {
+    
+  }
+
+  fileComplaint(passenger: { id: number; firstname: string; lastname: string }) {
+    
   }
 }

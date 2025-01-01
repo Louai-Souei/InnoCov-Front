@@ -1,0 +1,141 @@
+<div class="card">
+  <p-table
+    #dt
+    [value]="bookedRoutes"
+    dataKey="id"
+    [rows]="2"
+    [rowsPerPageOptions]="[2, 4, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    [globalFilterFields]="['departure', 'arrival']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:20%">Departure</th>
+        <th style="width:20%">Arrival</th>
+        <th style="width:15%">Departure Date</th>
+        <th style="width:15%">Departure Time</th>
+        <th style="width:10%">Actions</th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="departure"
+            placeholder="Search by departure"
+            ariaLabel="Filter Departure"
+          />
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="arrival"
+            placeholder="Search by arrival"
+            ariaLabel="Filter Arrival"
+          />
+        </th>
+        <!--        <th>-->
+        <!--          <p-columnFilter-->
+        <!--            type="date"-->
+        <!--            field="departureDate"-->
+        <!--            placeholder="Search by departure date"-->
+        <!--            ariaLabel="Filter Departure Date"-->
+        <!--          >-->
+        <!--            <p-datepicker placeholder="Select Date"></p-datepicker>-->
+        <!--          </p-columnFilter>-->
+        <!--        </th>-->
+        <th></th> <!-- For Departure Time, it will be displayed as time format in the table -->
+        <!--        <th>-->
+        <!--          <p-columnFilter-->
+        <!--            type="text"-->
+        <!--            field="driver.firstname"-->
+        <!--            placeholder="Search by driver"-->
+        <!--            ariaLabel="Filter Driver"-->
+        <!--          />-->
+        <!--        </th>-->
+        <!--        <th>-->
+        <!--          <p-columnFilter-->
+        <!--            type="number"-->
+        <!--            field="remainingSeats"-->
+        <!--            placeholder="Filter Remaining Seats"-->
+        <!--            ariaLabel="Filter Seats"-->
+        <!--          />-->
+        <!--        </th>-->
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-route>
+      <tr>
+        <td>{{ route.departure }}</td>
+        <td>{{ route.arrival }}</td>
+        <td>{{ route.departureDate | date }}</td>
+        <td>{{ route.departureDate | date:'shortTime' }}</td>
+        <!--        <td>{{ route.driver.firstname }}</td>-->
+        <td style="text-align: center !important;">
+          <button (click)="viewDetails(route)" pButton label="Complaint Someone ?" class="button-base view-details-btn"></button>
+<!--          <button (click)="reserveRoute(route)" pButton label="Take a Place" class="button-base reserve-btn"></button>-->
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No routes found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Route Details Dialog -->
+  <p-dialog
+    header="Driver and Passengers"
+    [(visible)]="visible"
+    [modal]="false"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }"
+    [draggable]="true"
+    [resizable]="true"
+  >
+    <div *ngIf="selectedRoute" class="dialog-content">
+      <!-- Drivers Section -->
+      <div class="info-section">
+        <p class="section-title">Driver:</p>
+
+
+            <div class="person-info">
+              <i class="pi pi-user person-icon"></i>
+              <p class="person-name">{{ selectedRoute.driver.firstname }} {{ selectedRoute.driver.lastname }}</p>
+              <button
+
+                pButton
+                label="Complaint"
+                class="button-base complaint-btn"
+              ></button>
+            </div>
+
+
+      </div>
+
+      <!-- Passengers Section -->
+      <div class="info-section">
+        <p class="section-title">Passengers:</p>
+        <ul class="person-list">
+          <li *ngFor="let passenger of selectedRoute.passengers">
+            <div class="person-info">
+              <i class="pi pi-user person-icon"></i>
+              <p class="person-name">{{ passenger.firstname }} {{ passenger.lastname }}</p>
+              <button
+                (click)="fileComplaint(passenger)"
+                pButton
+                label="Complaint"
+                class="button-base complaint-btn"
+              ></button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </p-dialog>
+
+</div>

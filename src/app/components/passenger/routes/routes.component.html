@@ -94,10 +94,10 @@
   <p-dialog
     header="Route Details"
     [(visible)]="visible"
-    [modal]="true"
+    [modal]="false"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
     [style]="{ width: '50vw' }"
-    [draggable]="false"
+    [draggable]="true"
     [resizable]="true">
 
     <div *ngIf="selectedRoute" class="route-details">

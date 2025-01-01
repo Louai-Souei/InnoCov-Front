@@ -8,6 +8,7 @@ import {DriverLayoutComponent} from './layouts/driver-layout/driver-layout.compo
 import {PassengerLayoutComponent} from "./layouts/passenger-layout/passenger-layout.component";
 import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
 import {RoutesComponent} from "./components/passenger/routes/routes.component";
+import {BookedRoutesComponent} from "./components/passenger/booked-routes/booked-routes.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -28,8 +29,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {path: 'available-routes', component: RoutesComponent},
-      {path: 'profile', component: LoginComponent},
-      {path: 'about', component: RegisterComponent},
+      {path: 'booked-routes', component: BookedRoutesComponent},
     ],
   },
   {
