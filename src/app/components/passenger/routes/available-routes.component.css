@@ -36,7 +36,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* Driver Information Styling */
 .driver-info {
   display: flex;
   align-items: center;
@@ -65,7 +64,6 @@
   color: #777;
 }
 
-/* Passengers Information Styling */
 .passenger-list {
   list-style-type: none;
   padding-left: 0;
@@ -88,37 +86,79 @@
   font-size: 1.3rem;
   margin-right: 8px;
 }
-/* Classe de base pour tous les boutons */
+
 .button-base {
-  padding: 0.5rem 1rem; /* Espacement interne */
-  font-size: 0.9rem; /* Taille de police */
-  color: #fff; /* Couleur du texte */
-  border-radius: 5px; /* Arrondi des bords */
-  border: none; /* Enlever les bordures par défaut */
-  cursor: pointer; /* Curseur pointer sur hover */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .button-base:hover {
-  opacity: 0.9; /* Effet sur hover */
+  opacity: 0.9;
 }
 
-/* Couleurs spécifiques pour chaque bouton */
 .view-details-btn {
-  background-color: #007ad9; /* Bleu */
+  background-color: #007ad9;
 }
 
 .reserve-btn {
   align-self: center;
   justify-content: center;
   margin-top: 3px;
-  background-color: #28a745; /* Vert */
+  background-color: #28a745;
 }
 
-/* Optionnel : d'autres couleurs si nécessaire */
 .view-details-btn:hover {
-  background-color: #005fa3; /* Couleur bleu sur hover */
+  background-color: #005fa3;
 }
 
 .reserve-btn:hover {
-  background-color: #218838; /* Couleur vert sur hover */
+  background-color: #218838;
 }
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+hr.divider {
+  margin: 10px 200px;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.title-section {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.calendar-container {
+  position: relative;
+}
+
+.clear-date-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+}
+
+.clear-date-btn:hover {
+  color: red;
+}
+

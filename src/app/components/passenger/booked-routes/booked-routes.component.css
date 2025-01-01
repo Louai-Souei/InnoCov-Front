@@ -36,7 +36,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* Driver Information Styling */
 .driver-info {
   display: flex;
   align-items: center;
@@ -65,7 +64,6 @@
   color: #777;
 }
 
-/* Passengers Information Styling */
 .passenger-list {
   list-style-type: none;
   padding-left: 0;
@@ -88,45 +86,42 @@
   font-size: 1.3rem;
   margin-right: 8px;
 }
-/* Classe de base pour tous les boutons */
+
 .button-base {
-  padding: 0.5rem 1rem; /* Espacement interne */
-  font-size: 0.9rem; /* Taille de police */
-  color: #fff; /* Couleur du texte */
-  border-radius: 5px; /* Arrondi des bords */
-  border: none; /* Enlever les bordures par défaut */
-  cursor: pointer; /* Curseur pointer sur hover */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .button-base:hover {
-  opacity: 0.9; /* Effet sur hover */
+  opacity: 0.9;
 }
 
-/* Couleurs spécifiques pour chaque bouton */
 .view-details-btn {
-  background-color: #d90000; /* Bleu */
+  background-color: #d90000;
 }
 
 .reserve-btn {
   align-self: center;
   justify-content: center;
   margin-top: 3px;
-  background-color: #28a745; /* Vert */
+  background-color: #28a745;
 }
 
-/* Optionnel : d'autres couleurs si nécessaire */
 .view-details-btn:hover {
-  background-color: #bd0303; /* Couleur bleu sur hover */
+  background-color: #bd0303;
 }
 
 .reserve-btn:hover {
-  background-color: #218838; /* Couleur vert sur hover */
+  background-color: #218838;
 }
 .dialog-content {
   font-family: Arial, sans-serif;
 }
 
-/* Sections Styling */
 .info-section {
   margin-top: 1rem;
 }
@@ -138,7 +133,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* Person List Styling */
 .person-list {
   list-style-type: none;
   padding-left: 0;
@@ -154,7 +148,6 @@
   margin: 0.5rem 0;
 }
 
-/* Person Info Styling */
 .person-info {
   display: flex;
   align-items: center;
@@ -174,7 +167,6 @@
   flex-grow: 1;
 }
 
-/* Button Styling */
 .button-base {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
@@ -194,4 +186,12 @@
 
 .complaint-btn:hover {
   background-color: #bd0303;
+}
+
+.current-user-btn {
+  background-color: #3583dc;
+}
+
+.current-user-btn:hover {
+  background-color: #246bb7;
 }

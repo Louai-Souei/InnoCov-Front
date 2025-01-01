@@ -37,7 +37,7 @@ import {MatListModule} from "@angular/material/list";
 import { DriverLayoutComponent } from './layouts/driver-layout/driver-layout.component';
 import { PassengerLayoutComponent } from './layouts/passenger-layout/passenger-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { RoutesComponent } from './components/passenger/routes/routes.component';
+import { AvailableRoutesComponent } from './components/passenger/routes/available-routes.component';
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {TagModule} from "primeng/tag";
@@ -45,6 +45,7 @@ import {DialogModule} from "primeng/dialog";
 import {CalendarModule} from "primeng/calendar";
 import {ToastrModule} from "ngx-toastr";
 import { BookedRoutesComponent } from './components/passenger/booked-routes/booked-routes.component';
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { BookedRoutesComponent } from './components/passenger/booked-routes/book
     DriverLayoutComponent,
     PassengerLayoutComponent,
     AdminLayoutComponent,
-    RoutesComponent,
+    AvailableRoutesComponent,
     BookedRoutesComponent,
 
   ],
@@ -96,6 +97,7 @@ import { BookedRoutesComponent } from './components/passenger/booked-routes/book
     TagModule,
     DialogModule,
     CalendarModule,
+    InputTextareaModule,
   ],
   providers: [
 //    provideHttpClient(withInterceptors([authInterceptorInterceptor])),

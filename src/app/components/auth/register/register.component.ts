@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   registerUser(): void {
     this.authenticationService.register(this.registerRequest).subscribe({
       next: (data: AuthenticationResponse) => {
-        this.authenticationService.setUserInformations(data)
+        this.authenticationService.setUserInformation(data)
         if (data.role == Role.DRIVER)
           this.router.navigate(['driver/tasks'])
         if (data.role == Role.PASSENGER)

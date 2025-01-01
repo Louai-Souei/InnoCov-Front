@@ -65,7 +65,6 @@
         <th></th>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-route>
       <tr>
         <td>{{ route.departure }}</td>
@@ -74,20 +73,18 @@
         <td>{{ route.departureDate | date:'shortTime' }}</td>
         <!--        <td>{{ route.driver.firstname }}</td>-->
         <td style="text-align: center !important;">
-          <button (click)="viewDetails(route)" pButton label="Complaint Someone ?" class="button-base view-details-btn"></button>
-<!--          <button (click)="reserveRoute(route)" pButton label="Take a Place" class="button-base reserve-btn"></button>-->
+          <button (click)="viewDetails(route)" pButton label="Complaint Someone ?"
+                  class="button-base view-details-btn"></button>
+          <!--          <button (click)="reserveRoute(route)" pButton label="Take a Place" class="button-base reserve-btn"></button>-->
         </td>
       </tr>
     </ng-template>
-
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="7">No routes found.</td>
       </tr>
     </ng-template>
   </p-table>
-
-  <!-- Route Details Dialog -->
   <p-dialog
     header="Driver and Passengers"
     [(visible)]="visible"
@@ -98,26 +95,19 @@
     [resizable]="true"
   >
     <div *ngIf="selectedRoute" class="dialog-content">
-      <!-- Drivers Section -->
       <div class="info-section">
         <p class="section-title">Driver:</p>
-
-
-            <div class="person-info">
-              <i class="pi pi-user person-icon"></i>
-              <p class="person-name">{{ selectedRoute.driver.firstname }} {{ selectedRoute.driver.lastname }}</p>
-              <button
-
-                pButton
-                label="Complaint"
-                class="button-base complaint-btn"
-              ></button>
-            </div>
-
-
+        <div class="person-info">
+          <i class="pi pi-user person-icon"></i>
+          <p class="person-name">{{ selectedRoute.driver.firstname }} {{ selectedRoute.driver.lastname }}</p>
+          <button
+            (click)="showComplaintForm(selectedRoute.driver)"
+            pButton
+            label="Complaint"
+            class="button-base complaint-btn"
+          ></button>
+        </div>
       </div>
-
-      <!-- Passengers Section -->
       <div class="info-section">
         <p class="section-title">Passengers:</p>
         <ul class="person-list">
@@ -126,7 +116,7 @@
               <i class="pi pi-user person-icon"></i>
               <p class="person-name">{{ passenger.firstname }} {{ passenger.lastname }}</p>
               <button
-                (click)="fileComplaint(passenger)"
+                (click)="showComplaintForm(passenger)"
                 pButton
                 label="Complaint"
                 class="button-base complaint-btn"
@@ -137,5 +127,41 @@
       </div>
     </div>
   </p-dialog>
-
+  <div class="card flex justify-content-center">
+    <p-button label="Show"/>
+    <p-dialog
+      header="{{ selectedUser?.firstname }} {{ selectedUser?.lastname }} - Complaint"
+      [(visible)]="complaintForm"
+      [style]="{ width: '25rem' }"
+      [modal]="true"
+      (onHide)="closeComplaintForm()"
+      [resizable]="false"
+    >
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="complaintType" class="font-semibold w-6rem">Complaint Type</label>
+        <p-dropdown
+          id="complaintType"
+          [options]="complaintTypes"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="selectedComplaintType"
+          placeholder="Select Complaint Type"
+        ></p-dropdown>
+      </div>
+      <div class="flex align-items-center gap-3 mb-5">
+        <label for="description" class="font-semibold w-6rem">Description</label>
+        <textarea
+          id="description"
+          pInputTextarea
+          rows="5"
+          [(ngModel)]="complaintDescription"
+          placeholder="Enter complaint description"
+        ></textarea>
+      </div>
+      <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="closeComplaintForm()"/>
+        <p-button label="Save" (onClick)="submitComplaint()"/>
+      </div>
+    </p-dialog>
+  </div>
 </div>

@@ -7,7 +7,7 @@ import {RegisterComponent} from './components/auth/register/register.component';
 import {DriverLayoutComponent} from './layouts/driver-layout/driver-layout.component';
 import {PassengerLayoutComponent} from "./layouts/passenger-layout/passenger-layout.component";
 import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
-import {RoutesComponent} from "./components/passenger/routes/routes.component";
+import {AvailableRoutesComponent} from "./components/passenger/routes/available-routes.component";
 import {BookedRoutesComponent} from "./components/passenger/booked-routes/booked-routes.component";
 
 const routes: Routes = [
@@ -28,7 +28,7 @@ const routes: Routes = [
     component: PassengerLayoutComponent,
     canActivate: [authGuard],
     children: [
-      {path: 'available-routes', component: RoutesComponent},
+      {path: 'available-routes', component: AvailableRoutesComponent},
       {path: 'booked-routes', component: BookedRoutesComponent},
     ],
   },

@@ -7,8 +7,9 @@ mat-toolbar {
 }
 
 .toolbar-title {
-  font-size: 1.25rem;
+  font-size: 30px;
   font-weight: bold;
+  margin: 15px 0;
 }
 
 .spacer {
@@ -90,7 +91,6 @@ mat-divider {
 .sidenav-open .content-box {
   margin-left: 300px;
 }
-
 
 @media (max-width: 768px) {
   .content-box {

@@ -30,10 +30,10 @@ export class AuthInterceptorService implements HttpInterceptor {
       }
     }
 
-    console.log(
+/*    console.log(
       `Request Headers for ${request.url}:`,
       request.headers.keys().map((header) => `${header}: ${request.headers.get(header)}`)
-    );
+    );*/
 
     return next.handle(request).pipe(
       tap((event) => {

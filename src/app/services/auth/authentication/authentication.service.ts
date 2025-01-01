@@ -19,12 +19,12 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  setUserInformations(data: AuthenticationResponse): void {
+  setUserInformation(data: AuthenticationResponse): void {
     this.setToken(data.access_token);
-    this.setUserExtraInformations(data);
+    this.setUserExtraInformation(data);
   }
 
-  private setUserExtraInformations(data: AuthenticationResponse) {
+  private setUserExtraInformation(data: AuthenticationResponse) {
     localStorage.setItem(this.userId, String(data.userId));
     localStorage.setItem(this.email, data.email);
     localStorage.setItem(this.role, data.role);
@@ -53,5 +53,14 @@ export class AuthenticationService {
 
   logout(): Observable<void> {
     return this.http.post<void>(this.apiUrl + "logout", {});
+  }
+
+  getActiveUserInformation(): any {
+    return {
+      userId: localStorage.getItem(this.userId),
+      email: localStorage.getItem(this.email),
+      role: localStorage.getItem(this.role),
+      occupation: localStorage.getItem(this.occupation),
+    };
   }
 }

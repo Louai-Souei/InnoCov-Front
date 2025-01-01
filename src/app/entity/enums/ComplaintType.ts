@@ -1,0 +1,7 @@
+export enum ComplaintType {
+  HARASSMENT = 'HARASSMENT',
+  LATE_ARRIVAL = 'LATE_ARRIVAL',
+  NO_SHOW = 'NO_SHOW',
+  UNSAFE_DRIVING = 'UNSAFE_DRIVING',
+  OTHER = 'OTHER'
+}

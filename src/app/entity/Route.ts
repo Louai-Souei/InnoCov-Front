@@ -1,3 +1,5 @@
+import {User} from "./User";
+
 export class Route {
   id!: number;
   departure!: string;
@@ -5,15 +7,8 @@ export class Route {
   departureDate!: string;
   numberOfPassengers!: number;
   remainingSeats?: number;
-  driver!: {
-    id: number;
-    firstname: string;
-    lastname: string;
-  };
-  passengers!: Array<{
-    id: number;
-    firstname: string;
-    lastname: string;
-  }>;
+  driver!: User;
+  passengers!: User[]
   status!: string;
+  driverName!: string;
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from "../../settings/app-settings";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Route } from "../../entity/Route"
+import { Route } from "../../entity/Route";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,11 @@ export class RoutesService {
     return this.http.get<Route>(`${this.apiUrl}route-information/${routeId}`);
   }
 
-  getAvailableRoutes(): Observable<Route[]> {
-    return this.http.get<Route[]>(`${this.apiUrl}available`);
+  getAvailableRoutes(selectedDate: Date | null): Observable<Route[]> {
+    let params = new HttpParams();
+    if (selectedDate) {
+      params = params.set('date', selectedDate.toDateString());
+    }
+    return this.http.get<Route[]>(`${this.apiUrl}available`, { params });
   }
 }
