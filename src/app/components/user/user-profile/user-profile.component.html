@@ -1,0 +1,94 @@
+<div class="p-grid p-justify-center p-align-center user-profile-container">
+  <div class="p-col-12 p-md-6">
+    <!-- Profil Card -->
+    <p-card header="Mon Profil" subheader="Gérez vos informations personnelles" styleClass="user-card">
+      <form (ngSubmit)="updateProfile(activeUser)" class="p-fluid">
+        <!-- Prénom -->
+        <div class="p-field">
+          <label for="firstname">Prénom</label>
+          <input
+            pInputText
+            id="firstname"
+            [(ngModel)]="activeUser.firstname"
+            name="firstname"
+            placeholder="Entrez votre prénom"
+            required
+          />
+        </div>
+
+        <!-- Nom -->
+        <div class="p-field">
+          <label for="lastname">Nom</label>
+          <input
+            pInputText
+            id="lastname"
+            [(ngModel)]="activeUser.lastname"
+            name="lastname"
+            placeholder="Entrez votre nom"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="p-field">
+          <label for="email">Email</label>
+          <input
+            pInputText
+            id="email"
+            [(ngModel)]="activeUser.email"
+            name="email"
+            placeholder="Entrez votre email"
+            required
+          />
+        </div>
+
+        <!-- Téléphone -->
+        <div class="p-field">
+          <label for="phone">Téléphone</label>
+          <input
+            pInputText
+            id="phone"
+            [(ngModel)]="activeUser.phone"
+            name="phone"
+            placeholder="Entrez votre numéro de téléphone"
+          />
+        </div>
+
+        <!-- Rôle -->
+        <div class="p-field">
+          <label for="role">Rôle</label>
+          <input
+            pInputText
+            id="role"
+            [(ngModel)]="activeUser.role"
+            name="role"
+            disabled
+          />
+        </div>
+
+        <!-- Occupation -->
+        <div class="p-field">
+          <label for="occupation">Occupation</label>
+          <input
+            pInputText
+            id="occupation"
+            [(ngModel)]="activeUser.occupation"
+            name="occupation"
+            placeholder="Entrez votre profession"
+          />
+        </div>
+
+        <!-- Bouton Mettre à jour -->
+        <div class="p-field p-mt-4">
+          <button
+            pButton
+            type="submit"
+            label="Mettre à jour le profil"
+            icon="pi pi-save"
+            class="p-button-primary p-button-rounded"
+          ></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>

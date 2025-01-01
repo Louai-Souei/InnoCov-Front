@@ -9,6 +9,7 @@ import {PassengerLayoutComponent} from "./layouts/passenger-layout/passenger-lay
 import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
 import {AvailableRoutesComponent} from "./components/passenger/routes/available-routes.component";
 import {BookedRoutesComponent} from "./components/passenger/booked-routes/booked-routes.component";
+import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -19,7 +20,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {path: 'tasks', component: TaskComponent},
-      {path: 'profile', component: LoginComponent},
+      {path: 'profile', component: UserProfileComponent},
       {path: 'about', component: RegisterComponent},
     ],
   },
@@ -30,6 +31,7 @@ const routes: Routes = [
     children: [
       {path: 'available-routes', component: AvailableRoutesComponent},
       {path: 'booked-routes', component: BookedRoutesComponent},
+      {path: 'profile', component: UserProfileComponent},
     ],
   },
   {
