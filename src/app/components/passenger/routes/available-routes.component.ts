@@ -30,6 +30,9 @@ export class AvailableRoutesComponent implements OnInit {
     this.routesService.getAvailableRoutes(this.selectedDate).subscribe({
       next: (routes) => {
         this.routes = routes;
+        this.routes.forEach((route) => {
+          route.driverName = `${route.driver.firstname} ${route.driver.lastname}`.toLowerCase();
+        });
         this.loading = false;
       },
       error: () => {
