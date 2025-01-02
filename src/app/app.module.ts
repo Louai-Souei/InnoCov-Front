@@ -46,6 +46,8 @@ import {CalendarModule} from "primeng/calendar";
 import {ToastrModule} from "ngx-toastr";
 import { BookedRoutesComponent } from './components/passenger/booked-routes/booked-routes.component';
 import {InputTextareaModule} from "primeng/inputtextarea";
+import { MyRoutesComponent } from './components/Driver/my-routes/my-routes.component';
+import { DriverBookingComponent } from './components/Driver/driver-booking/driver-booking.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 
 @NgModule({
@@ -59,6 +61,8 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     AdminLayoutComponent,
     AvailableRoutesComponent,
     BookedRoutesComponent,
+    MyRoutesComponent,
+    DriverBookingComponent,
     UserProfileComponent,
 
   ],

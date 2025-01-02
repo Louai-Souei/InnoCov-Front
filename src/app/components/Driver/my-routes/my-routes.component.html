@@ -1,0 +1,94 @@
+<div class="card flex justify-center">
+  <p-button (click)="showDialog('add')" label="Add Route" icon="pi pi-plus" class="mb-4" />
+  <p-dialog
+    header="{{ isEditMode ? 'Edit Route' : 'Add Route' }}"
+    [modal]="true"
+    [(visible)]="visible"
+    [style]="{ width: '30rem' }"
+  >
+    <div class="flex flex-column gap-4">
+      <div class="flex items-center gap-4">
+        <label for="departure" class="font-semibold w-32">Departure</label>
+        <input
+          pInputText
+          id="departure"
+          [(ngModel)]="currentRoute.departure"
+          class="flex-auto"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="arrival" class="font-semibold w-32">Arrival</label>
+        <input
+          pInputText
+          id="arrival"
+          [(ngModel)]="currentRoute.arrival"
+          class="flex-auto"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="departureDate" class="font-semibold w-32">Departure Date</label>
+        <input
+          type="datetime-local"
+          id="departureDate"
+          [(ngModel)]="currentRoute.departureDate"
+          class="flex-auto"
+        />
+      </div>
+      <div class="flex items-center gap-4">
+        <label for="passengers" class="font-semibold w-32">Passengers</label>
+        <input
+          type="number"
+          id="passengers"
+          [(ngModel)]="currentRoute.numberOfPassengers"
+          class="flex-auto"
+        />
+      </div>
+    </div>
+    <div class="flex justify-end gap-2 mt-4">
+      <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+      <p-button
+        label="Save"
+        (click)="saveRoute()"
+        [disabled]="!currentRoute.departure || !currentRoute.arrival"
+      />
+    </div>
+  </p-dialog>
+</div>
+
+<div>
+  <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id" style="width:10%">ID <p-sortIcon field="id" /></th>
+        <th pSortableColumn="departure" style="width:20%">Departure <p-sortIcon field="departure" /></th>
+        <th pSortableColumn="arrival" style="width:20%">Arrival <p-sortIcon field="arrival" /></th>
+        <th pSortableColumn="departureDate" style="width:20%">Departure Date <p-sortIcon field="departureDate" /></th>
+        <th pSortableColumn="numberOfPassengers" style="width:10%">Passengers <p-sortIcon field="numberOfPassengers" /></th>
+        <th style="width:20%">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-route>
+      <tr>
+        <td>{{ route.id }}</td>
+        <td>{{ route.departure }}</td>
+        <td>{{ route.arrival }}</td>
+        <td>{{ route.departureDate | date: 'short' }}</td>
+        <td>{{ route.numberOfPassengers }}</td>
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            (click)="showDialog('edit', route)"
+            label="Edit"
+            class="p-button-text"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            (click)="deleteRoute(route.id)"
+            label="Delete"
+            class="p-button-text p-button-danger"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

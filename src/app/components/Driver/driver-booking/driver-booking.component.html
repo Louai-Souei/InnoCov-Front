@@ -1,0 +1,65 @@
+<div>
+  <h2>Your Routes</h2>
+  <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Departure Date</th>
+        <th>Passengers</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-route>
+      <tr>
+        <td>{{ route.id }}</td>
+        <td>{{ route.departure }}</td>
+        <td>{{ route.arrival }}</td>
+        <td>{{ route.departureDate | date: 'short' }}</td>
+        <td>{{ route.numberOfPassengers }}</td>
+        <td>
+          <p-button
+            label="View Bookings"
+            class="p-button-text"
+            (click)="selectRoute(route)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div *ngIf="selectedRoute">
+  <h2>Bookings for Route: {{ selectedRoute.departure }} - {{ selectedRoute.arrival }}</h2>
+  <p-table [value]="bookings" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Passenger</th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-booking>
+      <tr>
+        <td>{{ booking.passenger.firstname }} {{ booking.passenger.lastname }}</td>
+
+        <td>
+          <p-button
+            *ngIf="booking.status === 'pending'"
+            label="Accept"
+            icon="pi pi-check"
+            class="p-button-success p-button-text"
+            (click)="acceptBooking(booking.id)"
+          ></p-button>
+          <p-button
+            *ngIf="booking.status === 'pending'"
+            label="Reject"
+            icon="pi pi-times"
+            class="p-button-danger p-button-text"
+            (click)="rejectBooking(booking.id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
