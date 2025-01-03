@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { AppSettings } from "../../../settings/app-settings";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { AuthenticationRequest } from "../../../util/AuthenticationRequest";
-import { AuthenticationResponse } from "../../../util/AuthenticationResponse";
-import { RegisterRequest } from "../../../util/RegisterRequest";
+import {Injectable} from '@angular/core';
+import {AppSettings} from "../../../settings/app-settings";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {AuthenticationRequest} from "../../../util/AuthenticationRequest";
+import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +42,9 @@ export class AuthenticationService {
     localStorage.clear();
   }
 
-  register(request: RegisterRequest): Observable<AuthenticationResponse> {
-    return this.http.post<AuthenticationResponse>(this.apiUrl + "register", request);
+  register(formData: FormData): Observable<AuthenticationResponse> {
+    console.log(formData);
+    return this.http.post<AuthenticationResponse>(this.apiUrl + "register", formData);
   }
 
   login(request: AuthenticationRequest): Observable<AuthenticationResponse> {

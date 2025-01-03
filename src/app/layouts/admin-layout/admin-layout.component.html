@@ -7,15 +7,11 @@
     <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     <mat-icon *ngIf="sidenav.opened">close</mat-icon>
   </button>
-
-  <span class="toolbar-title">InnoCov</span>
-
-  <span class="spacer"></span>
+  <span class="toolbar-title">{{ pageTitle }}</span>
   <button mat-icon-button (click)="logOutUser()">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
-
 <mat-sidenav-container [class.sidenav-open]="sidenav.opened">
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
     <img
@@ -23,27 +19,30 @@
       src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
       alt="Avatar"
     />
-
-    <h4 class="name">User User</h4>
-    <p class="designation">Software Engineer</p>
-
+    <h4 class="name">Admin User</h4>
+    <p class="designation">Administrator</p>
     <mat-divider></mat-divider>
-
-    <button mat-button class="menu-button" routerLink="/user/tasks">
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
+    <button mat-button class="menu-button" routerLink="/admin/available-tasks">
+      <mat-icon>task</mat-icon>
+      <span>Available Tasks</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/user/tasks">
+    <button mat-button class="menu-button" routerLink="/admin/completed-tasks">
+      <mat-icon>event</mat-icon>
+      <span>Completed Tasks History</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="/admin/profile">
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>
-    <button mat-button class="menu-button" routerLink="/user/tasks">
+    <button mat-button class="menu-button" routerLink="/admin/history">
+      <mat-icon>history</mat-icon>
+      <span>History</span>
+    </button>
+    <button mat-button class="menu-button" routerLink="/admin/about">
       <mat-icon>info</mat-icon>
       <span>About</span>
     </button>
-
     <mat-divider></mat-divider>
-
     <button mat-button class="menu-button" routerLink="/help">
       <mat-icon>help</mat-icon>
       <span>Help</span>

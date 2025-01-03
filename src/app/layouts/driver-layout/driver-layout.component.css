@@ -7,8 +7,9 @@ mat-toolbar {
 }
 
 .toolbar-title {
-  font-size: 1.25rem;
+  font-size: 30px;
   font-weight: bold;
+  margin: 15px 0;
 }
 
 .spacer {
@@ -18,7 +19,7 @@ mat-toolbar {
 
 mat-sidenav {
   margin: 16px;
-  width: 200px;
+  width: 220px;
   border-right: none;
   background: #002b5c;
   color: white;
@@ -38,7 +39,7 @@ mat-sidenav {
 }
 
 mat-sidenav-container {
-  height: calc(100vh - 65px);
+  height: calc(100vh - 95px);
 }
 
 .menu-button {
@@ -46,7 +47,7 @@ mat-sidenav-container {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: 1rem;
+  font-size: 13px;
 
   mat-icon {
     margin-right: 8px;
@@ -91,7 +92,6 @@ mat-divider {
   margin-left: 300px;
 }
 
-
 @media (max-width: 768px) {
   .content-box {
     margin: 16px 50px;
@@ -100,7 +100,6 @@ mat-divider {
 
 @media (max-width: 480px) {
   .content-box {
-    margin: 16px 16px; /* Presque pleine largeur sur les très petits écrans */
+    margin: 16px 16px;
   }
 }
-

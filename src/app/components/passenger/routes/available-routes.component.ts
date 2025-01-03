@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {RoutesService} from "../../../services/routes/routes.service";
-import {Route} from "../../../entity/Route";
-import {AlertService} from "../../../services/utils/alert/alert.service";
+import { Component, OnInit } from '@angular/core';
+import { RoutesService } from "../../../services/routes/routes.service";
+import { Route } from "../../../entity/Route";
+import { AlertService } from "../../../services/utils/alert/alert.service";
+import { ApiResponse } from "../../../services/utils/models/ApiResponse";
+import {RouteBookingService} from "../../../services/route-booking/route-booking.service";
 
 @Component({
   selector: 'app-routes',
@@ -19,8 +21,8 @@ export class AvailableRoutesComponent implements OnInit {
   constructor(
     private routesService: RoutesService,
     private alertService: AlertService,
-  ) {
-  }
+    private routeBookingService: RouteBookingService
+  ) {}
 
   ngOnInit() {
     this.loadAvailableRoutes();
@@ -46,7 +48,22 @@ export class AvailableRoutesComponent implements OnInit {
     this.visible = true;
   }
 
-  reserveRoute(route: any) {
+  reserveRoute(route: Route) {
+    if (route) {
+      this.routeBookingService.addBooking(route.id).subscribe({
+        next: (response: ApiResponse<string>) => {
+          if (response.success) {
+            this.alertService.success('Booking successfully added!');
+            this.loadAvailableRoutes();
+          } else {
+            this.alertService.error('Booking failed! Please try again.');
+          }
+        },
+        error: () => {
+          this.alertService.error('An error occurred while making the booking!');
+        }
+      });
+    }
   }
 
   onFilterDateChange($event: any) {

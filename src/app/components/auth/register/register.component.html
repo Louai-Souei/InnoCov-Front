@@ -112,7 +112,7 @@
 
       <!-- Occupation -->
       <div class="field">
-        <label for="occupation">Role</label>
+        <label for="occupation">Occupation</label>
         <p-dropdown
           [(ngModel)]="registerRequest.occupation"
           [options]="occupations"
@@ -129,6 +129,20 @@
         </small>
       </div>
 
+      <div class="field">
+        <label for="userImage">User Image</label>
+        <input
+          type="file"
+          class="w-full"
+          id="userImage"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+        <small class="p-error" *ngIf="!selectedFile">User image is required</small>
+      </div>
+      <div class="preview-container" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Preview" class="image-preview" />
+      </div>
       <!-- Submit Button -->
       <p-button
         label="Register"
