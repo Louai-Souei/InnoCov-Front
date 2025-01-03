@@ -1,4 +1,14 @@
 <div class="p-grid p-justify-center p-align-center user-profile-container">
+  <div>
+    <img
+      *ngIf="activeUser && activeUser.userImage"
+      [src]="getUserImageSrc(activeUser.userImage)"
+      alt="User Image"
+      class="user-image"
+    />
+    <span *ngIf="!activeUser?.userImage">No Image Available</span>
+  </div>
+
   <div class="p-col-12 p-md-6">
     <!-- Profil Card -->
     <p-card header="Mon Profil" subheader="Gérez vos informations personnelles" styleClass="user-card">

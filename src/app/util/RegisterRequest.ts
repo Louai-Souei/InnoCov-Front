@@ -6,4 +6,5 @@ export class RegisterRequest {
   password!: string;
   role!: string;
   occupation!: string;
+  userImage!: File | null;
 }

@@ -23,7 +23,6 @@ export class PassengerLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
-      console.log('Router event:', event);
       if (event instanceof Scroll) {
         this.updatePageTitle(event.routerEvent.url);
       }

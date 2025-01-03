@@ -9,4 +9,5 @@ export class User {
   email!: string;
   role!: Role;
   occupation!: Occupation;
+  userImage!: any;
 }
