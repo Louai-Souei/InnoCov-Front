@@ -8,9 +8,12 @@ import { HttpClient } from "@angular/common/http";
 })
 export class DriverBookingComponent implements OnInit {
   email: string = '';
-  routes: any[] = [];
   selectedRoute: any = null;
   bookings: any[] = [];
+  visible: boolean = false;
+  private dt2: any;
+  routes: any = null;
+  loading: boolean = true;
 
   constructor(private http: HttpClient) {}
 
@@ -33,20 +36,40 @@ export class DriverBookingComponent implements OnInit {
     const url = `http://localhost:8081/api/route/driver-routes/${this.email}`;
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
-        this.routes = data;
+        // Add a booking count to each route
+        this.routes = data.map( route => {
+          // Count the number of pending bookings for each route
+            this.fetchBookingsByRoute(route.id);
+          route.bookingCount = this.getBookingCountForRoute(route.id);
+
+          return route;
+
+        });
+        console.log(this.routes);
+        this.loading = false;
       },
       error: (err) => {
         console.error('Error fetching routes:', err);
+        this.loading = false;
       },
     });
+  }
+
+// Method to get the number of pending bookings for a specific route
+  getBookingCountForRoute(routeId: number): number {
+    const bookingsForRoute = this.bookings;
+    console.log(bookingsForRoute.length);
+    return bookingsForRoute.length;
   }
 
   fetchBookingsByRoute(routeId: number) {
     const url = `http://localhost:8081/api/route-booking/by-route/${routeId}`;
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
-        console.log(data);
-        this.bookings = data;
+        // Filter bookings with status 'pending' and route.id == routeId
+        this.bookings = data.filter(booking => booking.status === 'pending' && booking.route.id === routeId);
+        this.selectedRouteBookings = this.bookings;
+        console.log(this.bookings);
 
       },
       error: (err) => {
@@ -55,12 +78,14 @@ export class DriverBookingComponent implements OnInit {
     });
   }
 
-  updateBookingStatus(bookingId: number, status: string) {
-    const url = `http://localhost:8081/api/route-booking/${bookingId}/${status}`;
+
+  updateBookingStatus(bookingId: any, status: string) {
+    const url = `http://localhost:8081/api/route-booking/${bookingId.id}/${status}`;
     this.http.put(url, {}).subscribe({
       next: () => {
-        if (this.selectedRoute) {
-          this.fetchBookingsByRoute(this.selectedRoute.id); // Refresh bookings for the selected route
+        // Refresh the bookings for the selected route
+        if (bookingId) {
+          this.fetchBookingsByRoute(bookingId.route.id); // Refresh bookings
         }
       },
       error: (err) => {
@@ -69,16 +94,37 @@ export class DriverBookingComponent implements OnInit {
     });
   }
 
-  acceptBooking(bookingId: number) {
+  acceptBooking(bookingId: any) {
     this.updateBookingStatus(bookingId, 'accept');
   }
 
-  rejectBooking(bookingId: number) {
+  rejectBooking(bookingId: any) {
     this.updateBookingStatus(bookingId, 'reject');
+
   }
 
-  selectRoute(route: any) {
-    this.selectedRoute = route;
-    this.fetchBookingsByRoute(route.id);
+  displayBookingDialog = false;
+  selectedRouteBookings :any;
+
+  async viewBookings(route: any) {
+    // Fetch bookings for the selected route
+    await this.fetchBookingsByRoute(route.id);
+
+    console.log(this.selectedRouteBookings);
+    this.displayBookingDialog = true;
+  }
+
+  closeDialog() {
+    this.displayBookingDialog = false;
+  }
+
+  onFilterDateChange($event: any) {
+    this.routes = $event;
+    this.fetchRoutes();
+  }
+
+  clearDate() {
+    this.routes = null;
+    this.onFilterDateChange(null);
   }
 }

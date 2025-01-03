@@ -49,6 +49,9 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import { MyRoutesComponent } from './components/Driver/my-routes/my-routes.component';
 import { DriverBookingComponent } from './components/Driver/driver-booking/driver-booking.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CommonModule } from '@angular/common';
+import { InputGroupModule } from 'primeng/inputgroup';
 
 @NgModule({
   declarations: [
@@ -104,6 +107,9 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     DialogModule,
     CalendarModule,
     InputTextareaModule,
+    CommonModule,
+    MultiSelectModule,
+    InputGroupModule
   ],
   providers: [
 //    provideHttpClient(withInterceptors([authInterceptorInterceptor])),
