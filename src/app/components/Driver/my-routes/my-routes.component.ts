@@ -64,14 +64,7 @@ export class MyRoutesComponent implements OnInit {
     this.visible = true;
   }
 
-  saveRoute() {
-    if (this.isEditMode) {
-      this.updateRoute();
-    } else {
-      this.addRoute();
-    }
-    this.visible = false;
-  }
+
 
   addRoute() {
     const url = `http://localhost:8081/api/route/new-route`;
@@ -108,4 +101,42 @@ export class MyRoutesComponent implements OnInit {
       },
     });
   }
+  formSubmitted: boolean = false;
+  dateError: string = '';
+
+  validateDateTime() {
+    const selectedDate = new Date(this.currentRoute.departureDate);
+    const now = new Date();
+
+    if (selectedDate <= now) {
+      this.dateError = 'Departure date and time must be in the future.';
+    } else {
+      this.dateError = '';
+    }
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.currentRoute.departure &&
+      this.currentRoute.arrival &&
+      this.currentRoute.departureDate &&
+      this.currentRoute.numberOfPassengers >= 1 &&
+      !this.dateError
+    );
+  }
+
+  saveRoute() {
+    this.formSubmitted = true;
+    this.validateDateTime();
+
+    if (this.isFormValid()) {
+      if (this.isEditMode) {
+        this.updateRoute();
+      } else {
+        this.addRoute();
+      }
+      this.visible = false;
+    }
+  }
+
 }

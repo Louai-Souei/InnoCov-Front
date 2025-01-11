@@ -1,0 +1,17 @@
+.custom-datetime {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.custom-datetime:focus {
+  border-color: #007ad9;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
+}
+
+.p-error {
+  color: red;
+  font-size: 0.85rem;
+}
