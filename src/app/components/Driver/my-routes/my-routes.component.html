@@ -14,7 +14,11 @@
           id="departure"
           [(ngModel)]="currentRoute.departure"
           class="flex-auto"
+          required
         />
+        <small *ngIf="!currentRoute.departure && formSubmitted" class="p-error"
+        >Departure is required.</small
+        >
       </div>
       <div class="flex items-center gap-4">
         <label for="arrival" class="font-semibold w-32">Arrival</label>
@@ -23,7 +27,11 @@
           id="arrival"
           [(ngModel)]="currentRoute.arrival"
           class="flex-auto"
+          required
         />
+        <small *ngIf="!currentRoute.arrival && formSubmitted" class="p-error"
+        >Arrival is required.</small
+        >
       </div>
       <div class="flex items-center gap-4">
         <label for="departureDate" class="font-semibold w-32">Departure Date</label>
@@ -31,8 +39,11 @@
           type="datetime-local"
           id="departureDate"
           [(ngModel)]="currentRoute.departureDate"
-          class="flex-auto"
+          class="flex-auto custom-datetime"
+          required
+          (change)="validateDateTime()"
         />
+        <small *ngIf="dateError" class="p-error">{{ dateError }}</small>
       </div>
       <div class="flex items-center gap-4">
         <label for="passengers" class="font-semibold w-32">Passengers</label>
@@ -41,7 +52,14 @@
           id="passengers"
           [(ngModel)]="currentRoute.numberOfPassengers"
           class="flex-auto"
+          min="1"
+          required
         />
+        <small
+          *ngIf="currentRoute.numberOfPassengers < 1 && formSubmitted"
+          class="p-error"
+        >Number of passengers must be at least 1.</small
+        >
       </div>
     </div>
     <div class="flex justify-end gap-2 mt-4">
@@ -49,10 +67,11 @@
       <p-button
         label="Save"
         (click)="saveRoute()"
-        [disabled]="!currentRoute.departure || !currentRoute.arrival"
+        [disabled]="!isFormValid()"
       />
     </div>
   </p-dialog>
+
 </div>
 
 <div>

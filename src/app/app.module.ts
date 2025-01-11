@@ -52,6 +52,7 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
 import { InputGroupModule } from 'primeng/inputgroup';
+import {AdminStatsComponent} from "./components/Admin/admin-stats/admin-stats.component";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
     MyRoutesComponent,
     DriverBookingComponent,
     UserProfileComponent,
+    AdminStatsComponent,
 
   ],
   imports: [
