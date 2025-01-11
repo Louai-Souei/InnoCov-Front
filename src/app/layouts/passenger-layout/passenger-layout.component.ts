@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, Scroll} from '@angular/router';
-import {AuthenticationService} from '../../services/auth/authentication/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { Router, Scroll } from '@angular/router';
+import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
+import { UserService } from "../../services/user/user.service";
+import { User } from "../../entity/User";
 
 const ROUTE_TITLES: { [key: string]: string } = {
   '/passenger/available-routes': 'Available Routes',
@@ -18,8 +20,13 @@ const ROUTE_TITLES: { [key: string]: string } = {
 })
 export class PassengerLayoutComponent implements OnInit {
   pageTitle: string = '';
+  activeUser: User | undefined;
 
-  constructor(private router: Router, private authService: AuthenticationService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -27,7 +34,16 @@ export class PassengerLayoutComponent implements OnInit {
         this.updatePageTitle(event.routerEvent.url);
       }
     });
+    this.userService.getActiveUser().subscribe({
+      next: (activeUser) => {
+        this.activeUser = activeUser.data;
+      },
+      error: (err) => {
+        console.error('Error fetching active user', err);
+      },
+    });
   }
+
   updatePageTitle(url: string): void {
     this.pageTitle = ROUTE_TITLES[url] || 'InnoCov';
   }
@@ -36,11 +52,26 @@ export class PassengerLayoutComponent implements OnInit {
     this.authService.logout().subscribe({
       next: () => {
         this.authService.clearLocalStorage();
-        this.router.navigate(['/']);
+        this.router.navigate(['/']).then(r => true);
       },
       error: () => {
-        console.error('Erreur lors de la déconnexion');
+        console.error('Error during logout');
       },
     });
+  }
+
+  getUserImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '';
+    }
+    if (base64Image.startsWith('/9j/')) {
+      return 'data:image/jpeg;base64,' + base64Image;
+    } else if (base64Image.startsWith('iVBORw0KGgo=')) {
+      return 'data:image/png;base64,' + base64Image;
+    } else if (base64Image.startsWith('R0lGODlh')) {
+      return 'data:image/gif;base64,' + base64Image;
+    } else {
+      return 'data:image/jpeg;base64,' + base64Image;
+    }
   }
 }

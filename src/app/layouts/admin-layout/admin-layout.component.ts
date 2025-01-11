@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Scroll } from '@angular/router';
 import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
+import {UserService} from "../../services/user/user.service";
+import {User} from "../../entity/User";
 
 const ADMIN_ROUTE_TITLES: { [key: string]: string } = {
   '/admin/available-tasks': 'Available Tasks',
@@ -18,14 +20,25 @@ const ADMIN_ROUTE_TITLES: { [key: string]: string } = {
 })
 export class AdminLayoutComponent implements OnInit {
   pageTitle: string = '';
+  activeUser: User | undefined;
 
-  constructor(private router: Router, private authService: AuthenticationService) {}
+  constructor(private router: Router,
+              private authService: AuthenticationService,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof Scroll) {
         this.updatePageTitle(event.routerEvent.url);
       }
+    });
+    this.userService.getActiveUser().subscribe({
+      next: (activeUser) => {
+        this.activeUser = activeUser.data;
+      },
+      error: (err) => {
+        console.error('Error fetching active user', err);
+      },
     });
   }
 
@@ -43,5 +56,19 @@ export class AdminLayoutComponent implements OnInit {
         console.error('Error during logout');
       },
     });
+  }
+  getUserImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '';
+    }
+    if (base64Image.startsWith('/9j/')) {
+      return 'data:image/jpeg;base64,' + base64Image;
+    } else if (base64Image.startsWith('iVBORw0KGgo=')) {
+      return 'data:image/png;base64,' + base64Image;
+    } else if (base64Image.startsWith('R0lGODlh')) {
+      return 'data:image/gif;base64,' + base64Image;
+    } else {
+      return 'data:image/jpeg;base64,' + base64Image;
+    }
   }
 }

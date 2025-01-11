@@ -1,9 +1,5 @@
 <mat-toolbar class="mat-elevation-z8">
-  <button
-    mat-icon-button
-    *ngIf="sidenav.mode === 'over'"
-    (click)="sidenav.toggle()"
-  >
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
     <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     <mat-icon *ngIf="sidenav.opened">close</mat-icon>
   </button>
@@ -17,35 +13,40 @@
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
     <img
       class="avatar mat-elevation-z8"
-      src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
-      alt="Avatar"
+      *ngIf="activeUser && activeUser.userImage"
+      [src]="getUserImageSrc(activeUser.userImage)"
+      alt="User Image"
     />
-    <h4 class="name">Passenger User</h4>
-    <p class="designation">Passenger</p>
+    <h4 class="name" *ngIf="activeUser?.firstname || activeUser?.lastname; else noName">
+      {{ activeUser?.firstname || '' }} {{ activeUser?.lastname || '' }}
+    </h4>
+    <ng-template #noName>
+      <h4 class="name">Anonymous User</h4>
+    </ng-template>
+    <p class="designation">{{ activeUser?.role || 'Role' }}</p>
 
     <mat-divider></mat-divider>
 
-    <!-- First button for Available Routes -->
     <button mat-button class="menu-button" routerLink="/passenger/available-routes">
       <mat-icon>directions_bus</mat-icon>
       <span>Available Routes</span>
     </button>
 
-    <!-- Booked Routes History -->
     <button mat-button class="menu-button" routerLink="/passenger/booked-routes">
-      <mat-icon>event</mat-icon> <!-- Icon for booked routes -->
+      <mat-icon>event</mat-icon>
       <span>Booked Routes History</span>
     </button>
 
-    <!-- Other Menu Buttons -->
     <button mat-button class="menu-button" routerLink="/passenger/profile">
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>
+
     <button mat-button class="menu-button" routerLink="/passenger/history">
       <mat-icon>history</mat-icon>
       <span>History</span>
     </button>
+
     <button mat-button class="menu-button" routerLink="/passenger/about">
       <mat-icon>info</mat-icon>
       <span>About</span>

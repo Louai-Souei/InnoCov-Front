@@ -83,7 +83,7 @@ export class UserStatsComponent implements OnInit {
       },
       series: [{
         name: 'New Users',
-        data: categories.map((category, index) => ({
+        data: categories.map((category: string, index: number) => ({
           name: category,
           y: data[index]
         }))
