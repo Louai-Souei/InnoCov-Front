@@ -25,4 +25,9 @@ export class UserService {
   updateUserProfile(user: User): Observable<ApiResponse<User>> {
     return this.http.put<ApiResponse<User>>(`${this.apiUrl}update-profile`, user);
   }
+
+  getUserCreationStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}creation-stats`);
+  }
+
 }

@@ -10,6 +10,7 @@ import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.componen
 import {AvailableRoutesComponent} from "./components/passenger/routes/available-routes.component";
 import {BookedRoutesComponent} from "./components/passenger/booked-routes/booked-routes.component";
 import {UserProfileComponent} from "./components/user/user-profile/user-profile.component";
+import {UserStatsComponent} from "./components/admin/user-stats/user-stats.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
       {path: 'tasks', component: TaskComponent},
       {path: 'profile', component: UserProfileComponent},
       {path: 'about', component: RegisterComponent},
+      {path: 'stats', component: UserStatsComponent},
     ],
   },
   {path: '**', redirectTo: '', pathMatch: 'full'}

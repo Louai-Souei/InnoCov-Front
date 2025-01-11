@@ -47,6 +47,8 @@ import {ToastrModule} from "ngx-toastr";
 import { BookedRoutesComponent } from './components/passenger/booked-routes/booked-routes.component';
 import {InputTextareaModule} from "primeng/inputtextarea";
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { UserStatsComponent } from './components/admin/user-stats/user-stats.component';
+import {HighchartsChartModule} from "highcharts-angular";
 
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     AvailableRoutesComponent,
     BookedRoutesComponent,
     UserProfileComponent,
+    UserStatsComponent,
 
   ],
   imports: [
@@ -100,6 +103,7 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     DialogModule,
     CalendarModule,
     InputTextareaModule,
+    HighchartsChartModule,
   ],
   providers: [
 //    provideHttpClient(withInterceptors([authInterceptorInterceptor])),

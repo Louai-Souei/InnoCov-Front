@@ -1,0 +1,42 @@
+/* General styling for the component */
+.user-stats-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styling for the chart container wrapper */
+.chart-container-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Space between the charts */
+  margin-top: 20px;
+  max-width: 100%;
+}
+
+/* Styling for the individual chart container */
+.chart-container {
+  width: 48%; /* Each chart takes up almost half of the container width */
+  height: 370px; /* Ensure height consistency for both charts */
+}
+
+/* Styling for the no stats message */
+.no-stats-message {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #888;
+}
+
+.no-stats-message p {
+  margin: 0;
+}

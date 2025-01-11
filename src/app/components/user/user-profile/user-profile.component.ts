@@ -11,6 +11,9 @@ import {User} from "../../../entity/User";
 export class UserProfileComponent implements OnInit {
 
   activeUser!: User;
+  update:boolean  = false;
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   constructor(private userService: UserService) {}
 
@@ -59,4 +62,15 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
 }
