@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Table } from 'primeng/table';
+import { Dialog } from 'primeng/dialog';
+import {UserService} from "../../../services/user/user.service";
 
 interface User {
   id: number;
@@ -10,6 +12,7 @@ interface User {
   phone: string;
   role: string;
   occupation: string;
+  status: boolean; // Ajout du statut
 }
 
 interface Complaint {
@@ -21,11 +24,11 @@ interface Complaint {
   resolved: boolean;
 }
 
-interface ComplaintGroupedByComplainer {
-  complainer: User;
+interface ComplaintsGroupedByTargetUser {
+  targetUser: User;
   complaints: Complaint[];
   count: number;
-  expanded?: boolean; // Propriété optionnelle pour gérer l'état de développement
+  expanded?: boolean; // Optionnel pour gérer l'état de développement
 }
 
 @Component({
@@ -37,11 +40,13 @@ export class AdminStatsComponent implements OnInit {
   users: User[] = []; // Liste des utilisateurs
   loading: boolean = true; // État de chargement
   complaints: Complaint[] = []; // Liste des plaintes
-  complaintsGroupedByComplainer: ComplaintGroupedByComplainer[] = []; // Plaintes groupées par complainer
+  complaintsGroupedByTargetUser: ComplaintsGroupedByTargetUser[] = []; // Plaintes groupées par targetUser
+  selectedComplaints: Complaint[] = []; // Plaintes sélectionnées pour le dialogue
+  visible: boolean = false; // Contrôle la visibilité du dialogue
 
   @ViewChild('dt1') dt1!: Table; // Référence à la table
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   ngOnInit() {
     this.fetchUsers(); // Charger les utilisateurs
@@ -70,11 +75,11 @@ export class AdminStatsComponent implements OnInit {
         this.complaints = data;
         this.loading = false;
 
-        // Grouper les plaintes par complainer
-        this.complaintsGroupedByComplainer = this.groupComplaintsByComplainer(data);
+        // Grouper les plaintes par targetUser
+        this.complaintsGroupedByTargetUser = this.groupComplaintsByTargetUser(data);
 
         console.log('Fetched complaints:', this.complaints); // Log les plaintes
-        console.log('Complaints grouped by complainer:', this.complaintsGroupedByComplainer); // Log les plaintes groupées
+        console.log('Complaints grouped by targetUser:', this.complaintsGroupedByTargetUser); // Log les plaintes groupées
       },
       (error) => {
         console.error('Error fetching complaints:', error);
@@ -84,23 +89,23 @@ export class AdminStatsComponent implements OnInit {
     );
   }
 
-  // Méthode pour grouper les plaintes par complainer
-  groupComplaintsByComplainer(complaints: Complaint[]): ComplaintGroupedByComplainer[] {
-    const groupedMap = new Map<number, { complainer: User, complaints: Complaint[] }>();
+  // Méthode pour grouper les plaintes par targetUser
+  groupComplaintsByTargetUser(complaints: Complaint[]): ComplaintsGroupedByTargetUser[] {
+    const groupedMap = new Map<number, { targetUser: User, complaints: Complaint[] }>();
 
     complaints.forEach(complaint => {
-      const complainerId = complaint.complainer.id;
+      const targetUserId = complaint.targetUser.id;
 
-      if (!groupedMap.has(complainerId)) {
-        groupedMap.set(complainerId, { complainer: complaint.complainer, complaints: [] });
+      if (!groupedMap.has(targetUserId)) {
+        groupedMap.set(targetUserId, { targetUser: complaint.targetUser, complaints: [] });
       }
 
-      groupedMap.get(complainerId)!.complaints.push(complaint);
+      groupedMap.get(targetUserId)!.complaints.push(complaint);
     });
 
     // Convertir la Map en tableau et ajouter le nombre de plaintes
     return Array.from(groupedMap.values()).map(group => ({
-      complainer: group.complainer,
+      targetUser: group.targetUser,
       complaints: group.complaints,
       count: group.complaints.length,
       expanded: false // Initialiser expanded à false
@@ -108,42 +113,50 @@ export class AdminStatsComponent implements OnInit {
   }
 
   // Méthode pour basculer l'état de développement d'une ligne
-  toggleRow(group: ComplaintGroupedByComplainer) {
+  toggleRow(group: ComplaintsGroupedByTargetUser) {
     group.expanded = !group.expanded; // Inverse l'état de développement
   }
 
-  // Méthode pour effacer les filtres de la table
-  clear(table: Table) {
-    table.clear();
+
+
+  // Méthode pour afficher les détails des plaintes dans un dialogue
+  showComplaintsDetails(complaints: Complaint[]) {
+    this.selectedComplaints = complaints;
+    this.visible = true;
   }
 
-  // Méthode pour déterminer la sévérité en fonction du rôle
-  getSeverity(role: string) {
-    switch (role.toLowerCase()) {
-      case 'admin':
-        return 'success';
-      case 'user':
-        return 'info';
-      default:
-        return 'warning';
+  // Méthode pour fermer le dialogue
+  closeDialog() {
+    this.visible = false;
+    this.selectedComplaints = [];
+  }
+
+  toggleUserStatus(user: User) {
+    if (user.status) {
+      // Si l'utilisateur est actif, le désactiver
+      this.userService.deactivateUser(user.id).subscribe(
+        (updatedUser) => {
+          this.fetchUsers(); // Charger les utilisateurs
+          this.fetchComplaints(); // Charger les plaintes
+          console.log('Utilisateur désactivé:', updatedUser);
+        },
+        (error) => {
+          console.error('Erreur lors de la désactivation de l\'utilisateur:', error);
+        }
+      );
+    } else {
+      // Si l'utilisateur est inactif, l'activer
+      this.userService.activateUser(user.id).subscribe(
+        (updatedUser) => {
+          this.fetchUsers(); // Charger les utilisateurs
+          this.fetchComplaints(); // Charger les plaintes
+          console.log('Utilisateur activé:', updatedUser);
+        },
+        (error) => {
+          console.error('Erreur lors de l\'activation de l\'utilisateur:', error);
+        }
+      );
     }
   }
 
-  // Méthode pour filtrer globalement la table
-  onSearchInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    this.dt1.filterGlobal(inputElement.value, 'contains');
-  }
-
-  // Méthode pour filtrer par date (exemple)
-  onFilterDateChange($event: any) {
-    this.users = $event;
-    this.fetchUsers();
-  }
-
-  // Méthode pour effacer les filtres de date
-  clearDate() {
-    this.users = [];
-    this.onFilterDateChange(null);
-  }
 }

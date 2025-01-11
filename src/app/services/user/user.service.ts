@@ -10,7 +10,7 @@ import {ApiResponse} from "../utils/models/ApiResponse";
 })
 export class UserService {
 
-  private apiUrl: string = AppSettings.API_ENDPOINT + 'user/';
+  private apiUrl: string = AppSettings.API_ENDPOINT + 'users/';
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +24,12 @@ export class UserService {
 
   updateUserProfile(user: User): Observable<ApiResponse<User>> {
     return this.http.put<ApiResponse<User>>(`${this.apiUrl}update-profile`, user);
+  }
+  activateUser(userId: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}activate/${userId}`, {});
+  }
+
+  deactivateUser(userId: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}deactivate/${userId}`, {});
   }
 }
