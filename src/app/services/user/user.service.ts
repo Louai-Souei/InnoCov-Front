@@ -25,6 +25,13 @@ export class UserService {
   updateUserProfile(user: User): Observable<ApiResponse<User>> {
     return this.http.put<ApiResponse<User>>(`${this.apiUrl}update-profile`, user);
   }
+  activateUser(userId: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}activate/${userId}`, {});
+  }
+
+  deactivateUser(userId: number): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}deactivate/${userId}`, {});
+  }
 
   getUserCreationStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
     return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}creation-stats`);

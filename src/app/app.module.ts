@@ -46,9 +46,15 @@ import {CalendarModule} from "primeng/calendar";
 import {ToastrModule} from "ngx-toastr";
 import { BookedRoutesComponent } from './components/passenger/booked-routes/booked-routes.component';
 import {InputTextareaModule} from "primeng/inputtextarea";
+import { MyRoutesComponent } from './components/Driver/my-routes/my-routes.component';
+import { DriverBookingComponent } from './components/Driver/driver-booking/driver-booking.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { UserStatsComponent } from './components/admin/user-stats/user-stats.component';
 import {HighchartsChartModule} from "highcharts-angular";
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CommonModule } from '@angular/common';
+import { InputGroupModule } from 'primeng/inputgroup';
+import {AdminStatsComponent} from "./components/Admin/admin-stats/admin-stats.component";
 
 @NgModule({
   declarations: [
@@ -61,8 +67,11 @@ import {HighchartsChartModule} from "highcharts-angular";
     AdminLayoutComponent,
     AvailableRoutesComponent,
     BookedRoutesComponent,
+    MyRoutesComponent,
+    DriverBookingComponent,
     UserProfileComponent,
     UserStatsComponent,
+    AdminStatsComponent,
 
   ],
   imports: [
@@ -103,6 +112,9 @@ import {HighchartsChartModule} from "highcharts-angular";
     DialogModule,
     CalendarModule,
     InputTextareaModule,
+    CommonModule,
+    MultiSelectModule,
+    InputGroupModule,
     HighchartsChartModule,
   ],
   providers: [
