@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Table } from 'primeng/table';
-import { Dialog } from 'primeng/dialog';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Table} from 'primeng/table';
 import {UserService} from "../../../services/user/user.service";
 
 interface User {
@@ -55,7 +54,7 @@ export class AdminStatsComponent implements OnInit {
 
   // Méthode pour récupérer les utilisateurs
   fetchUsers() {
-    this.http.get<User[]>('http://localhost:8081/api/users/getAll').subscribe(
+    this.http.get<User[]>('http://localhost:8081/api/user/getAll').subscribe(
       (data) => {
         this.users = data;
         this.loading = false;
@@ -70,8 +69,9 @@ export class AdminStatsComponent implements OnInit {
 
   // Méthode pour récupérer les plaintes
   fetchComplaints() {
-    this.http.get<Complaint[]>('http://localhost:8081/api/complaint/complaints-grouped-by-target-user').subscribe(
+    this.http.get<Complaint[]>('http://localhost:8081/api/complaint/all-complaints').subscribe(
       (data) => {
+        console.log(data);
         this.complaints = data;
         this.loading = false;
 
@@ -103,14 +103,17 @@ export class AdminStatsComponent implements OnInit {
       groupedMap.get(targetUserId)!.complaints.push(complaint);
     });
 
-    // Convertir la Map en tableau et ajouter le nombre de plaintes
-    return Array.from(groupedMap.values()).map(group => ({
-      targetUser: group.targetUser,
-      complaints: group.complaints,
-      count: group.complaints.length,
-      expanded: false // Initialiser expanded à false
-    }));
+    // Convertir la Map en tableau, ajouter le nombre de plaintes et trier par count
+    return Array.from(groupedMap.values())
+      .map(group => ({
+        targetUser: group.targetUser,
+        complaints: group.complaints,
+        count: group.complaints.length,
+        expanded: false // Initialiser expanded à false
+      }))
+      .sort((a, b) => b.count - a.count); // Trier par count (décroissant)
   }
+
 
   // Méthode pour basculer l'état de développement d'une ligne
   toggleRow(group: ComplaintsGroupedByTargetUser) {

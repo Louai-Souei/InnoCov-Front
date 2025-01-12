@@ -27,7 +27,7 @@ export class LoginComponent {
         if (data.role == Role.PASSENGER)
           this.router.navigate(['passenger/available-routes'])
         if (data.role == Role.ADMIN)
-          this.router.navigate(['admin/tasks'])
+          this.router.navigate(['admin/dashboard'])
       },
       error: () => console.log("error Login"),
       complete: () => console.log("complete")

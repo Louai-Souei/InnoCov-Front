@@ -74,7 +74,8 @@
         </span>
         </td>
         <td>
-          <p-button label="View Bookings" severity="success" (click)="viewBookings(route)" />
+          <p-button label="Requests" severity="success" (click)="viewBookings(route)" />
+          <p-button label="Confirmed" severity="success" (click)="viewBookingsConfirmed(route)" />
         </td>
       </tr>
     </ng-template>
@@ -90,12 +91,12 @@
 
 <!-- Dialog for Bookings -->
 <p-dialog
-  header="Bookings"
+  header="Booking Requests"
   [(visible)]="displayBookingDialog"
   [modal]="true"
   [style]="{ width: '50vw' }">
   <ng-template pTemplate="content">
-    <p-table [value]="selectedRouteBookings">
+    <p-table [value]="selectedRouteBookingsRequests">
       <ng-template pTemplate="header">
         <tr>
           <th>Passenger Name</th>
@@ -128,6 +129,40 @@
       label="Close"
       severity="danger"
       (click)="closeDialog()"
+      styleClass="p-mr-2"/>
+  </ng-template>
+</p-dialog>
+
+
+<p-dialog
+  header="Booking Confirmed"
+  [(visible)]="displayBookingConfirmedDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }">
+  <ng-template pTemplate="content">
+    <p-table [value]="selectedRouteBookingsConfirmed">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Passenger Name</th>
+          <th>Booking Date</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-booking>
+        <tr>
+          <td>{{ booking.passenger.lastname }} {{ booking.passenger.firstname }}</td>
+          <td>{{ booking.bookingDate | date }}</td>
+          <td>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Close"
+      severity="danger"
+      (click)="closeDialogConfirmed()"
       styleClass="p-mr-2"/>
   </ng-template>
 </p-dialog>

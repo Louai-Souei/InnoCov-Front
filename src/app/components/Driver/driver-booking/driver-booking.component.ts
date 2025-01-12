@@ -14,6 +14,10 @@ export class DriverBookingComponent implements OnInit {
   private dt2: any;
   routes: any = null;
   loading: boolean = true;
+  displayBookingDialog = false;
+  displayBookingConfirmedDialog: boolean =false
+  selectedRouteBookingsRequests :any;
+  selectedRouteBookingsConfirmed :any;
 
   constructor(private http: HttpClient) {}
 
@@ -39,9 +43,9 @@ export class DriverBookingComponent implements OnInit {
         // Add a booking count to each route
         this.routes = data.map( route => {
           // Count the number of pending bookings for each route
-            this.fetchBookingsByRoute(route.id);
-          route.bookingCount = this.getBookingCountForRoute(route.id);
-
+          this.fetchBookingsByRoute(route.id);
+          route.bookingCount = route.passengers ? route.passengers.length : 0;
+          console.log(route)
           return route;
 
         });
@@ -56,6 +60,7 @@ export class DriverBookingComponent implements OnInit {
   }
 
 // Method to get the number of pending bookings for a specific route
+
   getBookingCountForRoute(routeId: number): number {
     const bookingsForRoute = this.bookings;
     console.log(bookingsForRoute.length);
@@ -67,8 +72,8 @@ export class DriverBookingComponent implements OnInit {
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
         // Filter bookings with status 'pending' and route.id == routeId
-        this.bookings = data.filter(booking => booking.status === 'pending' && booking.route.id === routeId);
-        this.selectedRouteBookings = this.bookings;
+        this.selectedRouteBookingsRequests = data.filter(booking => booking.status === 'default' && booking.route.id === routeId);
+        this.selectedRouteBookingsConfirmed = data.filter(booking => booking.status === 'accepted' && booking.route.id === routeId);
         console.log(this.bookings);
 
       },
@@ -87,6 +92,7 @@ export class DriverBookingComponent implements OnInit {
         if (bookingId) {
           this.fetchBookingsByRoute(bookingId.route.id); // Refresh bookings
         }
+        this.fetchRoutes()
       },
       error: (err) => {
         console.error(`Error updating booking status to ${status}:`, err);
@@ -103,19 +109,28 @@ export class DriverBookingComponent implements OnInit {
 
   }
 
-  displayBookingDialog = false;
-  selectedRouteBookings :any;
+
 
   async viewBookings(route: any) {
     // Fetch bookings for the selected route
     await this.fetchBookingsByRoute(route.id);
 
-    console.log(this.selectedRouteBookings);
+    console.log(this.selectedRouteBookingsRequests);
     this.displayBookingDialog = true;
+  }
+  async viewBookingsConfirmed(route: any) {
+    // Fetch bookings for the selected route
+    await this.fetchBookingsByRoute(route.id);
+
+    console.log(this.selectedRouteBookingsRequests);
+    this.displayBookingConfirmedDialog = true;
   }
 
   closeDialog() {
     this.displayBookingDialog = false;
+  }
+  closeDialogConfirmed() {
+    this.displayBookingConfirmedDialog = false;
   }
 
   onFilterDateChange($event: any) {

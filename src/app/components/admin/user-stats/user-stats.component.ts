@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import {ApiResponse} from "../../../services/utils/models/ApiResponse";
-import {UserService} from "../../../services/user/user.service";
+import { ApiResponse } from "../../../services/utils/models/ApiResponse";
+import { UserService } from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-user-stats',
@@ -9,15 +9,18 @@ import {UserService} from "../../../services/user/user.service";
   styleUrls: ['./user-stats.component.css']
 })
 export class UserStatsComponent implements OnInit {
-  public userStats: any;
+  public userStats: Map<string, number> = new Map();
+  public activeUserStats: Map<string, number> = new Map();
   Highcharts: typeof Highcharts = Highcharts;
   columnChartOptions: Highcharts.Options = {};
   pieChartOptions: Highcharts.Options = {};
+  activeUsersBarChartOptions: Highcharts.Options = {}; // Nouveau graphique
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.getUserStatsForLast4Weeks();
+    this.getActiveUsersStatsForLast4Weeks(); // Appel de la méthode pour le 3e graphique
   }
 
   getUserStatsForLast4Weeks(): void {
@@ -32,6 +35,16 @@ export class UserStatsComponent implements OnInit {
     });
   }
 
+  getActiveUsersStatsForLast4Weeks(): void {
+    this.userService.getActiveUsersStatsForLast4Weeks().subscribe((response: ApiResponse<Map<string, number>>) => {
+      if (response.success) {
+        this.activeUserStats = response.data;
+        this.initializeActiveUsersBarChart(); // Initialisation avec le nouveau graphique
+      } else {
+        console.error('Error fetching active user stats:', response.message);
+      }
+    });
+  }
 
 
   initializeColumnChart(): void {
@@ -79,7 +92,10 @@ export class UserStatsComponent implements OnInit {
         text: 'User Creation Stats (Pie Chart)'
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormatter: function () {
+          const point = this as Highcharts.Point;
+          return  point.y + ' New Users (' + point.percentage!.toFixed(1) + '%)';
+        }
       },
       series: [{
         name: 'New Users',
@@ -93,5 +109,64 @@ export class UserStatsComponent implements OnInit {
       }
     };
   }
+
+  initializeActiveUsersBarChart(): void {
+    const categories: string[] = Object.keys(this.activeUserStats);
+    const data: number[] = Object.values(this.activeUserStats);
+    const threshold = 5; // Définir la valeur limite
+
+    this.activeUsersBarChartOptions = {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'Active Users Stats (Bar Chart)'
+      },
+      xAxis: {
+        categories: categories,
+        title: {
+          text: 'Weeks'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Active Users Count'
+        },
+        plotLines: [ // Ligne de limite
+          {
+            value: threshold,
+            color: 'blue',
+            width: 2,
+            dashStyle: 'Dash',
+            label: {
+              text: `Limit: ${threshold}`,
+              align: 'center',
+              style: {
+                color: 'blue'
+              }
+            }
+          }
+        ]
+      },
+      series: [{
+        name: 'Active Users',
+        data: data,
+        zones: [ // Définir les couleurs selon la limite
+          {
+            value: threshold, // Valeurs inférieures à la limite
+            color: 'red'
+          },
+          {
+            color: 'green' // Valeurs supérieures ou égales à la limite
+          }
+        ]
+      }] as Highcharts.SeriesOptionsType[],
+      credits: {
+        enabled: false
+      }
+    };
+  }
+
 
 }

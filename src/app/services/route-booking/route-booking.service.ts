@@ -23,4 +23,12 @@ export class RouteBookingService {
   getUserBookedRoutes(): Observable<ApiResponse<Route[]>> {
     return this.http.get<ApiResponse<Route[]>>(`${this.apiUrl}routes-booked`);
   }
+
+  getPassengersReservedRoutesStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}user-creation-stats`);
+  }
+
+  getRouteBookingsCreationStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}route-bookings-creation-stats`);
+  }
 }

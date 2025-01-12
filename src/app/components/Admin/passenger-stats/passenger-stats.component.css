@@ -29,10 +29,6 @@ h2 {
   width: 48%; /* Each chart takes up almost half of the container width */
   height: 370px; /* Ensure height consistency for both charts */
 }
-.chart-full-container {
-  width: 100%; /* Each chart takes up almost half of the container width */
-  height: 300px; /* Ensure height consistency for both charts */
-}
 
 /* Styling for the no stats message */
 .no-stats-message {

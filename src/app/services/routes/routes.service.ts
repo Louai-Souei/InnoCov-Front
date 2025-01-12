@@ -3,6 +3,7 @@ import { AppSettings } from "../../settings/app-settings";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Route } from "../../entity/Route";
+import {ApiResponse} from "../utils/models/ApiResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,12 @@ export class RoutesService {
     }
     return this.http.get<Route[]>(`${this.apiUrl}available`, { params });
   }
+  getDriverCreatedRoutesStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}user-creation-stats`);
+  }
+
+  getRouteCreationStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}routes-creation-stats`);
+  }
+
 }

@@ -7,6 +7,7 @@ export class User {
   lastname!: string;
   phone!: string;
   email!: string;
+  password!:string;
   role!: Role;
   occupation!: Occupation;
   userImage!: any;

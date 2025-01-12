@@ -22,9 +22,10 @@ export class UserService {
     return this.http.get<ApiResponse<User>>(`${this.apiUrl}get-by-id/${userId}`);
   }
 
-  updateUserProfile(user: User): Observable<ApiResponse<User>> {
-    return this.http.put<ApiResponse<User>>(`${this.apiUrl}update-profile`, user);
+  updateUserProfile(formData: FormData): Observable<ApiResponse<User>> {
+    return this.http.put<ApiResponse<User>>(`${this.apiUrl}update-profile`, formData);
   }
+
   activateUser(userId: number): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}activate/${userId}`, {});
   }
@@ -35,6 +36,10 @@ export class UserService {
 
   getUserCreationStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
     return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}creation-stats`);
+  }
+
+  getActiveUsersStatsForLast4Weeks(): Observable<ApiResponse<Map<string, number>>> {
+    return this.http.get<ApiResponse<Map<string, number>>>(`${this.apiUrl}active-users-stats`);
   }
 
 }

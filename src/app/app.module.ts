@@ -55,6 +55,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
 import { InputGroupModule } from 'primeng/inputgroup';
 import {AdminStatsComponent} from "./components/Admin/admin-stats/admin-stats.component";
+import { DriverStatsComponent } from './components/admin/driver-stats/driver-stats.component';
+import { PassengerStatsComponent } from './components/admin/passenger-stats/passenger-stats.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -72,6 +75,8 @@ import {AdminStatsComponent} from "./components/Admin/admin-stats/admin-stats.co
     UserProfileComponent,
     UserStatsComponent,
     AdminStatsComponent,
+    DriverStatsComponent,
+    PassengerStatsComponent,
 
   ],
   imports: [
@@ -116,6 +121,7 @@ import {AdminStatsComponent} from "./components/Admin/admin-stats/admin-stats.co
     MultiSelectModule,
     InputGroupModule,
     HighchartsChartModule,
+    MatTooltipModule,
   ],
   providers: [
 //    provideHttpClient(withInterceptors([authInterceptorInterceptor])),

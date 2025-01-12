@@ -3,10 +3,14 @@ import { Router, Scroll } from '@angular/router';
 import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
 import {UserService} from "../../services/user/user.service";
 import {User} from "../../entity/User";
+import {ApiResponse} from "../../services/utils/models/ApiResponse";
+import {UserSharedService} from "../../services/user/user-shared.service";
 
 const ADMIN_ROUTE_TITLES: { [key: string]: string } = {
-  '/admin/available-tasks': 'Available Tasks',
-  '/admin/completed-tasks': 'Completed Tasks History',
+  '/admin/dashboard': 'Admin Dashboard',
+  '/admin/users-stats': 'Users Stats',
+  '/admin/drivers-stats': 'Drivers & Routes Stats',
+  '/admin/passengers-stats': 'Passengers & Reservations Stats',
   '/admin/profile': 'Profile',
   '/admin/history': 'History',
   '/admin/about': 'About',
@@ -20,11 +24,13 @@ const ADMIN_ROUTE_TITLES: { [key: string]: string } = {
 })
 export class AdminLayoutComponent implements OnInit {
   pageTitle: string = '';
-  activeUser: User | undefined;
+  activeUser: User | null | undefined;
 
   constructor(private router: Router,
               private authService: AuthenticationService,
-              private userService: UserService) {}
+              private userService: UserService,
+              private userSharedService: UserSharedService
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -33,13 +39,23 @@ export class AdminLayoutComponent implements OnInit {
       }
     });
     this.userService.getActiveUser().subscribe({
-      next: (activeUser) => {
+      next: (activeUser: ApiResponse<User>): void => {
         this.activeUser = activeUser.data;
+        console.log(this.activeUser);
       },
       error: (err) => {
         console.error('Error fetching active user', err);
       },
     });
+/*    this.userSharedService.activeUser$.subscribe({
+      next: (user) => {
+        this.activeUser = user;
+        console.log('Active user updated:', this.activeUser);
+      },
+      error: (err) => {
+        console.error('Error fetching active user', err);
+      },
+    });*/
   }
 
   updatePageTitle(url: string): void {

@@ -1,7 +1,6 @@
-<div class="p-grid user-profile-container">
-  <div class="p-col-12 p-md-4">
-    <p-card header="Mon Profil" styleClass="user-card">
-      <div class="p-d-flex p-flex-column p-ai-center">
+<div class="user-profile-container">
+  <div class="p-card user-card">
+    <div class="p-d-flex p-flex-column p-ai-center">
         <img
           *ngIf="activeUser && activeUser.userImage"
           [src]="getUserImageSrc(activeUser.userImage)"
@@ -11,104 +10,75 @@
         <span *ngIf="!activeUser?.userImage">No Image Available</span>
       </div>
       <div class="user-details">
-        <p><strong>Prénom:</strong> {{ activeUser.firstname }}</p>
-        <p><strong>Nom:</strong> {{ activeUser.lastname }}</p>
+        <p><strong>First Name:</strong> {{ activeUser.firstname }}</p>
+        <p><strong>Last Name:</strong> {{ activeUser.lastname }}</p>
         <p><strong>Email:</strong> {{ activeUser.email }}</p>
-        <p><strong>Téléphone:</strong> {{ activeUser.phone || 'Non renseigné' }}</p>
-        <p><strong>Rôle:</strong> {{ activeUser.role }}</p>
-        <p><strong>Occupation:</strong> {{ activeUser.occupation || 'Non renseignée' }}</p>
+        <p><strong>Phone:</strong> {{ activeUser.phone || 'Non Given' }}</p>
+        <p><strong>Role:</strong> {{ activeUser.role }}</p>
+        <p><strong>Occupation:</strong> {{ activeUser.occupation || 'Non Given' }}</p>
         <button
           pButton
-          label="Mettre à jour"
-          icon="pi pi-save"
+          label="Update Your Informations"
+          icon="pi pi-pencil"
           class="p-button-primary p-button-rounded"
           (click)="update=true"
         ></button>
+
       </div>
-    </p-card>
   </div>
-
-  <p-dialog [(visible)]="update" class="p-col-12 p-md-8">
-    <p-card  header="Modifier le Profil" subheader="Gérez vos informations personnelles" styleClass="user-card">
-      <form (ngSubmit)="updateProfile(activeUser)" class="p-fluid">
-        <div class="p-field">
-          <label for="firstname">Prénom</label>
-          <input
-            pInputText
-            id="firstname"
-            [(ngModel)]="activeUser.firstname"
-            name="firstname"
-            placeholder="Entrez votre prénom"
-            required
-          />
-        </div>
-
-        <div class="p-field">
-          <label for="lastname">Nom</label>
-          <input
-            pInputText
-            id="lastname"
-            [(ngModel)]="activeUser.lastname"
-            name="lastname"
-            placeholder="Entrez votre nom"
-            required
-          />
-        </div>
-
-        <div class="p-field">
-          <label for="email">Email</label>
-          <input
-            pInputText
-            id="email"
-            [(ngModel)]="activeUser.email"
-            name="email"
-            placeholder="Entrez votre email"
-            required
-          />
-        </div>
-
-        <div class="p-field">
-          <label for="phone">Téléphone</label>
-          <input
-            pInputText
-            id="phone"
-            [(ngModel)]="activeUser.phone"
-            name="phone"
-            placeholder="Entrez votre numéro de téléphone"
-          />
-        </div>
-
-        <div class="p-field">
-          <label for="occupation">Occupation</label>
-          <input
-            pInputText
-            id="occupation"
-            [(ngModel)]="activeUser.occupation"
-            name="occupation"
-            placeholder="Entrez votre profession"
-          />
-        </div>
-        <div class="field">
-          <label for="userImage">User Image</label>
-          <input
-            type="file"
-            class="w-full"
-            id="userImage"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-          />
-        </div>
-
-        <div class="p-field p-mt-4">
-          <button
-            pButton
-            type="submit"
-            label="Mettre à jour"
-            icon="pi pi-save"
-            class="p-button-primary p-button-rounded"
-          ></button>
-        </div>
-      </form>
-    </p-card>
-  </p-dialog>
 </div>
+
+  <p-dialog header=" Gérez vos informations personnelles " [(visible)]="update" class="p-col-12 p-md-8">
+    <form class="p-fluid" #userForm="ngForm">
+      <!-- Form fields for user details -->
+      <div class="p-field">
+        <label for="firstname">First Name</label>
+        <input pInputText id="firstname" [(ngModel)]="updatedUser.firstname" name="firstname" placeholder="First Name" required />
+      </div>
+
+      <div class="p-field">
+        <label for="lastname">Last Name</label>
+        <input pInputText id="lastname" [(ngModel)]="updatedUser.lastname" name="lastname" placeholder="Last Name" required />
+      </div>
+
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input pInputText id="email" [(ngModel)]="updatedUser.email" name="email" placeholder="Email" required disabled />
+      </div>
+
+      <div class="p-field">
+        <label for="phone">Phone</label>
+        <input pInputText id="phone" [(ngModel)]="updatedUser.phone" name="phone" placeholder="PhoneNumber" required/>
+      </div>
+
+      <div class="p-field">
+        <label for="occupation">Occupation</label>
+        <input pInputText id="occupation" [(ngModel)]="updatedUser.occupation" name="occupation" placeholder="Entrez votre profession" required/>
+      </div>
+
+      <!-- New Password field (optional) -->
+      <div class="p-field">
+        <label for="newPassword">New Password</label>
+        <input pInputText id="newPassword" [(ngModel)]="updatedUser.password" name="newPassword" type="password" placeholder="New Password" />
+      </div>
+
+      <div class="field">
+        <label for="userImage">Profile Picture</label>
+        <input type="file" class="w-full" id="userImage" (change)="onFileSelected($event)" accept="image/*" />
+      </div>
+      <div class="preview-container" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Preview" class="image-preview" />
+      </div>
+
+      <!-- Save and Cancel Buttons -->
+      <div class="p-field p-mt-4">
+        <div class="button-container">
+          <p-button (onClick)="update=false" label="Cancel" severity="danger" styleClass="p-mr-2" />
+          <p-button (onClick)="updateProfile(updatedUser)" label="Save" severity="success" styleClass="p-mr-2" [disabled]="!userForm.form.valid" />
+        </div>
+      </div>
+    </form>
+
+
+  </p-dialog>
+
