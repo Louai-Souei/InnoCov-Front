@@ -43,7 +43,11 @@ export class LoginComponent {
         } else {
           if (response.title === "Compte bloqué") {
             this.alertService.error(response.message, "Blocked Account !");
-          } else {
+          }
+          if (response.title === "Login Failed") {
+            this.alertService.error(response.message, "Failed to Connect !");
+          }
+          else {
             this.alertService.error(response.message, "Failed To Connect");
           }
         }
