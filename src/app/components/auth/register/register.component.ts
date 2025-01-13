@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {RegisterRequest} from "../../../util/RegisterRequest";
 import {AuthenticationService} from "../../../services/auth/authentication/authentication.service";
 import {Router} from "@angular/router";
-import {AuthenticationResponse} from "../../../util/AuthenticationResponse";
 import {Occupation} from "../../../entity/enums/Occupation";
 import {Role} from "../../../entity/enums/Role";
+import {AlertService} from "../../../services/utils/alert/alert.service";
 
 @Component({
   selector: 'app-register',
@@ -18,8 +18,11 @@ export class RegisterComponent implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | null = null;
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    private alertService: AlertService,
+    ) {
   }
 
   ngOnInit(): void {
@@ -28,10 +31,12 @@ export class RegisterComponent implements OnInit {
   }
 
   private loadRoles(): void {
-    this.roles = Object.keys(Role).map(key => ({
-      label: key.charAt(0).toUpperCase() + key.slice(1).toLowerCase(),
-      value: Role[key as keyof typeof Role]
-    }));
+    this.roles = Object.keys(Role)
+      .filter(key => key !== "ADMIN")
+      .map(key => ({
+        label: key.charAt(0).toUpperCase() + key.slice(1).toLowerCase(),
+        value: Role[key as keyof typeof Role]
+      }));
   }
 
   onFileSelected(event: Event): void {
@@ -66,19 +71,42 @@ export class RegisterComponent implements OnInit {
       formData.append("image", this.selectedFile, this.selectedFile.name);
 
       this.authenticationService.register(formData).subscribe({
-        next: (data: AuthenticationResponse): void => {
-          this.authenticationService.setUserInformation(data);
-          if (data.role == Role.DRIVER)
-            this.router.navigate(['driver/tasks'])
-          if (data.role == Role.PASSENGER)
-            this.router.navigate(['passenger/available-routes'])
-          if (data.role == Role.ADMIN)
-            this.router.navigate(['admin/tasks'])
+        next: (response): void => {
+          if (response.success) {
+            this.alertService.success(response.message, response.title || "Succès");
+            this.authenticationService.setUserInformation(response.data);
+            switch (response.data.role) {
+              case Role.DRIVER:
+                this.router.navigate(['driver/MyRoutes']);
+                break;
+              case Role.PASSENGER:
+                this.router.navigate(['passenger/available-routes']);
+                break;
+              case Role.ADMIN:
+                this.router.navigate(['admin/dashboard']);
+                break;
+              default:
+                break;
+            }
+          } else {
+            this.alertService.warning(response.message, response.title || "Warning");
+          }
         },
-        error: () => console.log("Error during registration"),
-        complete: () => console.log("Registration complete")
+        error: (error): void => {
+          this.alertService.error(
+            "An error occurred during registration.",
+            error.error?.title || "Warning"
+          );
+        },
+        complete: (): void => console.log("Registration process completed."),
       });
+    } else {
+      this.alertService.warning(
+        "Please upload an image to complete the registration.",
+        "Warning"
+      );
     }
   }
+
 
 }
