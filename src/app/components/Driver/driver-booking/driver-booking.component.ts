@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import {AlertService} from "../../../services/utils/alert/alert.service";
 
 @Component({
   selector: 'app-driver-booking',
@@ -15,11 +16,11 @@ export class DriverBookingComponent implements OnInit {
   routes: any = null;
   loading: boolean = true;
   displayBookingDialog = false;
-  displayBookingConfirmedDialog: boolean =false
-  selectedRouteBookingsRequests :any;
-  selectedRouteBookingsConfirmed :any;
+  displayBookingConfirmedDialog: boolean = false;
+  selectedRouteBookingsRequests: any;
+  selectedRouteBookingsConfirmed: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.initializeEmail();
@@ -40,30 +41,23 @@ export class DriverBookingComponent implements OnInit {
     const url = `http://localhost:8081/api/route/driver-routes/${this.email}`;
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
-        // Add a booking count to each route
-        this.routes = data.map( route => {
-          // Count the number of pending bookings for each route
+        this.routes = data.map(route => {
           this.fetchBookingsByRoute(route.id);
           route.bookingCount = route.passengers ? route.passengers.length : 0;
-          console.log(route)
           return route;
-
         });
-        console.log(this.routes);
         this.loading = false;
       },
       error: (err) => {
         console.error('Error fetching routes:', err);
         this.loading = false;
+        this.alertService.error('Failed to fetch routes.');
       },
     });
   }
 
-// Method to get the number of pending bookings for a specific route
-
   getBookingCountForRoute(routeId: number): number {
     const bookingsForRoute = this.bookings;
-    console.log(bookingsForRoute.length);
     return bookingsForRoute.length;
   }
 
@@ -71,34 +65,37 @@ export class DriverBookingComponent implements OnInit {
     const url = `http://localhost:8081/api/route-booking/by-route/${routeId}`;
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
-        // Filter bookings with status 'pending' and route.id == routeId
         this.selectedRouteBookingsRequests = data.filter(booking => booking.status === 'default' && booking.route.id === routeId);
         this.selectedRouteBookingsConfirmed = data.filter(booking => booking.status === 'accepted' && booking.route.id === routeId);
-        console.log(this.bookings);
-
       },
       error: (err) => {
         console.error('Error fetching bookings:', err);
+        this.alertService.error('Failed to fetch bookings.');
       },
     });
   }
-
 
   updateBookingStatus(bookingId: any, status: string) {
     const url = `http://localhost:8081/api/route-booking/${bookingId.id}/${status}`;
-    this.http.put(url, {}).subscribe({
-      next: () => {
-        // Refresh the bookings for the selected route
-        if (bookingId) {
-          this.fetchBookingsByRoute(bookingId.route.id); // Refresh bookings
+    this.http.put<any>(url, {}).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.alertService.success(response.message || `Booking status updated to ${status}.`);
+          if (bookingId) {
+            this.fetchBookingsByRoute(bookingId.route.id);
+          }
+          this.fetchRoutes();
+        } else {
+          this.alertService.warning(response.message || 'Failed to update booking status.');
         }
-        this.fetchRoutes()
       },
       error: (err) => {
         console.error(`Error updating booking status to ${status}:`, err);
+        this.alertService.error(`An error occurred while updating booking status to ${status}.`);
       },
     });
   }
+
 
   acceptBooking(bookingId: any) {
     this.updateBookingStatus(bookingId, 'accept');
@@ -106,29 +103,23 @@ export class DriverBookingComponent implements OnInit {
 
   rejectBooking(bookingId: any) {
     this.updateBookingStatus(bookingId, 'reject');
-
   }
-
 
 
   async viewBookings(route: any) {
-    // Fetch bookings for the selected route
     await this.fetchBookingsByRoute(route.id);
-
-    console.log(this.selectedRouteBookingsRequests);
     this.displayBookingDialog = true;
   }
-  async viewBookingsConfirmed(route: any) {
-    // Fetch bookings for the selected route
-    await this.fetchBookingsByRoute(route.id);
 
-    console.log(this.selectedRouteBookingsRequests);
+  async viewBookingsConfirmed(route: any) {
+    await this.fetchBookingsByRoute(route.id);
     this.displayBookingConfirmedDialog = true;
   }
 
   closeDialog() {
     this.displayBookingDialog = false;
   }
+
   closeDialogConfirmed() {
     this.displayBookingConfirmedDialog = false;
   }

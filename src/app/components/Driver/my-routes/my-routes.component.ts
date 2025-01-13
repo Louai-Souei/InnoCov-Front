@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
+import { AlertService } from "../../../services/utils/alert/alert.service";
 
 @Component({
   selector: 'app-my-routes',
@@ -19,7 +21,7 @@ export class MyRoutesComponent implements OnInit {
     numberOfPassengers: null,
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertService: AlertService) {}
 
   ngOnInit(): void {
     this.initializeEmail();
@@ -44,6 +46,7 @@ export class MyRoutesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching routes:', err);
+        this.alertService.error('Error fetching routes');
       },
     });
   }
@@ -64,43 +67,65 @@ export class MyRoutesComponent implements OnInit {
     this.visible = true;
   }
 
-
-
   addRoute() {
     const url = `http://localhost:8081/api/route/new-route`;
     this.http.post(url, this.currentRoute).subscribe({
       next: (data) => {
         this.fetchRoutes();
+        this.alertService.success('Route added successfully');
       },
       error: (err) => {
         console.error('Error adding route:', err);
+        this.alertService.error('Error adding route');
       },
     });
   }
 
   updateRoute() {
     const url = `http://localhost:8081/api/route/updateRoute/${this.currentRoute.id}`;
-    console.log(this.currentRoute)
+    console.log(this.currentRoute);
     this.http.put(url, this.currentRoute).subscribe({
       next: (data) => {
         this.fetchRoutes();
+        this.alertService.success('Route updated successfully');
       },
       error: (err) => {
         console.error('Error updating route:', err);
+        this.alertService.error('Error updating route');
       },
     });
   }
+
   deleteRoute(routeId: number) {
-    const url = `http://localhost:8081/api/route/${routeId}`;
-    this.http.delete(url).subscribe({
-      next: (data) => {
-        this.fetchRoutes();  // Rafraîchir la liste des routes après suppression
-      },
-      error: (err) => {
-        console.error('Error deleting route:', err);
-      },
+    // Show confirmation alert with SweetAlert2
+    Swal.fire({
+      title: 'Are you sure you want to remove this route?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If user confirms deletion
+        const url = `http://localhost:8081/api/route/${routeId}`;
+        this.http.delete(url).subscribe({
+          next: (data) => {
+            this.fetchRoutes(); // Refresh route list after deletion
+            this.alertService.success('Route deleted successfully'); // Show success alert
+          },
+          error: (err) => {
+            console.error('Error deleting route:', err);
+            this.alertService.error('Error deleting route'); // Show error alert
+          },
+        });
+      } else {
+        // If user cancels
+        this.alertService.info('Route deletion cancelled'); // Show info alert
+      }
     });
   }
+
   formSubmitted: boolean = false;
   dateError: string = '';
 
@@ -138,5 +163,4 @@ export class MyRoutesComponent implements OnInit {
       this.visible = false;
     }
   }
-
 }

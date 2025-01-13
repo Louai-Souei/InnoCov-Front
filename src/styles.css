@@ -148,4 +148,17 @@ body {
   color: #fff !important;
 }
 
+.swal2-popup {
+  font-size: 1.4em;
+  border-radius: 10px;
+}
+
+.swal2-title {
+  color: #f44336;
+}
+
+.swal2-confirm {
+  background-color: #4CAF50;
+  border: none;
+}
 

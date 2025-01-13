@@ -94,7 +94,8 @@ export class UserStatsComponent implements OnInit {
       tooltip: {
         pointFormatter: function () {
           const point = this as Highcharts.Point;
-          return  point.y + ' New Users (' + point.percentage!.toFixed(1) + '%)';
+          const recordNumber = this.series.data.indexOf(this) + 1;
+          return `Week ${recordNumber}: ${point.y} New Users (${point.percentage!.toFixed(1)}%)`;
         }
       },
       series: [{

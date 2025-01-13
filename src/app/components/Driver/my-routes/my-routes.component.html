@@ -78,7 +78,6 @@
   <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id" style="width:10%">ID <p-sortIcon field="id" /></th>
         <th pSortableColumn="departure" style="width:20%">Departure <p-sortIcon field="departure" /></th>
         <th pSortableColumn="arrival" style="width:20%">Arrival <p-sortIcon field="arrival" /></th>
         <th pSortableColumn="departureDate" style="width:20%">Departure Date <p-sortIcon field="departureDate" /></th>
@@ -88,7 +87,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-route>
       <tr>
-        <td>{{ route.id }}</td>
         <td>{{ route.departure }}</td>
         <td>{{ route.arrival }}</td>
         <td>{{ route.departureDate | date: 'short' }}</td>

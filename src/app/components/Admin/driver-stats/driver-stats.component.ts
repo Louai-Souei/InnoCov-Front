@@ -93,7 +93,8 @@ export class DriverStatsComponent implements OnInit {
       tooltip: {
         pointFormatter: function () {
           const point = this as Highcharts.Point;
-          return  point.y + ' routes (' + point.percentage!.toFixed(1) + '%)';
+          const recordNumber = this.series.data.indexOf(this) + 1;
+          return `Week ${recordNumber}: ${point.y} routes (${point.percentage!.toFixed(1)}%)`;
         }
       },
       series: [{

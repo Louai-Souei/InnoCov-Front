@@ -3,7 +3,7 @@ import { RoutesService } from "../../../services/routes/routes.service";
 import { Route } from "../../../entity/Route";
 import { AlertService } from "../../../services/utils/alert/alert.service";
 import { ApiResponse } from "../../../services/utils/models/ApiResponse";
-import {RouteBookingService} from "../../../services/route-booking/route-booking.service";
+import { RouteBookingService } from "../../../services/route-booking/route-booking.service";
 
 @Component({
   selector: 'app-routes',
@@ -36,9 +36,13 @@ export class AvailableRoutesComponent implements OnInit {
           route.driverName = `${route.driver.firstname} ${route.driver.lastname}`.toLowerCase();
         });
         this.loading = false;
+        if (routes.length === 0) {
+          this.alertService.info('No routes available for the selected date.', 'Information');
+        }
       },
       error: () => {
         this.loading = false;
+        this.alertService.error('Failed to load routes. Please try again later.');
       }
     });
   }
