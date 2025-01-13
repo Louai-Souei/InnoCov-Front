@@ -1,42 +1,40 @@
 <div class="card">
-  <!-- Titre pour le tableau des utilisateurs -->
-  <h2 class="table-title">Liste des Utilisateurs</h2>
+  <!-- Title for the users table -->
+  <h2 class="table-title">User List</h2>
   <hr class="divider" />
 
-  <!-- Tableau des utilisateurs -->
-  <p-table #dt [value]="users" dataKey="id" [rows]="5" [rowsPerPageOptions]="[2, 4, 50]" [loading]="loading"
+  <!-- Users table -->
+  <p-table #dt [value]="users" dataKey="id" [rows]="3" [rowsPerPageOptions]="[3, 5, 10]" [loading]="loading"
            [paginator]="true" [globalFilterFields]="['email', 'firstname', 'lastname', 'phone', 'status']"
            [tableStyle]="{ 'min-width': '75rem' }">
     <ng-template pTemplate="header">
       <tr>
         <th style="width:15%">Email</th>
-        <th style="width:15%">Prénom</th>
-        <th style="width:15%">Nom</th>
-        <th style="width:15%">Téléphone</th>
-        <th style="width:10%">Statut</th>
+        <th style="width:15%">First Name</th>
+        <th style="width:15%">Last Name</th>
+        <th style="width:15%">Phone</th>
+        <th style="width:10%">Status</th>
         <th style="width:10%">Actions</th>
       </tr>
       <tr>
         <th>
-          <p-columnFilter type="text" field="email" placeholder="Rechercher par email" ariaLabel="Filtrer par email">
+          <p-columnFilter type="text" field="email" placeholder="Search by email" ariaLabel="Filter by email">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="firstname" placeholder="Rechercher par prénom"
-                          ariaLabel="Filtrer par prénom">
+          <p-columnFilter type="text" field="firstname" placeholder="Search by first name" ariaLabel="Filter by first name">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="lastname" placeholder="Rechercher par nom"
-                          ariaLabel="Filtrer par nom">
+          <p-columnFilter type="text" field="lastname" placeholder="Search by last name" ariaLabel="Filter by last name">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="phone" placeholder="Rechercher par téléphone" ariaLabel="Filtrer par téléphone">
+          <p-columnFilter type="text" field="phone" placeholder="Search by phone" ariaLabel="Filter by phone">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="status" placeholder="Rechercher par statut" ariaLabel="Filtrer par statut">
+          <p-columnFilter type="text" field="status" placeholder="Search by status" ariaLabel="Filter by status">
           </p-columnFilter>
         </th>
         <th></th>
@@ -50,75 +48,68 @@
         <td>{{ user.phone }}</td>
         <td>
           <p-tag [severity]="user.status ? 'success' : 'danger'">
-            {{ user.status ? 'Actif' : 'Bloqué' }}
+            {{ user.status ? 'Active' : 'Blocked' }}
           </p-tag>
         </td>
         <td>
           <button
             pButton
             type="button"
-            [label]="user.status ? 'Bloquer' : 'Activer'"
+            [label]="user.status ? 'Block' : 'Activate'"
             [severity]="user.status ? 'danger' : 'success'"
             (click)="toggleUserStatus(user)"
           ></button>
-          <button
-            pButton
-            type="button"
-            label="Voir les détails"
-            severity="info"
-            (click)="showComplaintsDetails(user.complaints)"
-            class="p-button-text"
-          ></button>
+
         </td>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="6">Aucun utilisateur trouvé.</td>
+        <td colspan="6">No users found.</td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-<!-- Espace entre les tableaux -->
+<!-- Space between tables -->
 <div style="margin-top: 2rem;"></div>
 
 <div class="card">
-  <!-- Titre pour le tableau des plaintes -->
-  <h2 class="table-title">Liste des Plaintes</h2>
+  <!-- Title for the complaints table -->
+  <h2 class="table-title">Complaint List</h2>
   <hr class="divider" />
 
-  <!-- Tableau des plaintes -->
-  <p-table #dt [value]="complaints" dataKey="id" [rows]="5" [rowsPerPageOptions]="[2, 4, 50]" [loading]="loading"
+  <!-- Complaints table -->
+  <p-table #dt [value]="complaints" dataKey="id" [rows]="3" [rowsPerPageOptions]="[3, 5, 10]" [loading]="loading"
            [paginator]="true" [globalFilterFields]="['description', 'complainer.firstname', 'targetUser.firstname', 'createdAt']"
            [tableStyle]="{ 'min-width': '75rem' }">
 
     <ng-template pTemplate="header">
       <tr>
         <th style="width:20%">Description</th>
-        <th style="width:20%">Plaignant</th>
-        <th style="width:20%">Conducteur Ciblé</th>
+        <th style="width:20%">Complainer</th>
+        <th style="width:20%">Targeted Driver</th>
         <th style="width:15%">Date</th>
         <th style="width:10%">Actions</th>
       </tr>
       <tr>
         <th>
-          <p-columnFilter type="text" field="description" placeholder="Rechercher par description" ariaLabel="Filtrer par description">
+          <p-columnFilter type="text" field="description" placeholder="Search by description" ariaLabel="Filter by description">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="complainer.firstname" placeholder="Rechercher par plaignant"
-                          ariaLabel="Filtrer par plaignant">
+          <p-columnFilter type="text" field="complainer.firstname" placeholder="Search by complainer"
+                          ariaLabel="Filter by complainer">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="targetUser.firstname" placeholder="Rechercher par conducteur"
-                          ariaLabel="Filtrer par conducteur">
+          <p-columnFilter type="text" field="targetUser.firstname" placeholder="Search by driver"
+                          ariaLabel="Filter by driver">
           </p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="createdAt" placeholder="Rechercher par date" ariaLabel="Filtrer par date">
+          <p-columnFilter type="text" field="createdAt" placeholder="Search by date" ariaLabel="Filter by date">
           </p-columnFilter>
         </th>
         <th></th>
@@ -135,7 +126,7 @@
           <button
             pButton
             type="button"
-            label="Voir les détails"
+            label="View Details"
             severity="info"
             (click)="showComplaintsDetails([complaint])"
           ></button>
@@ -145,100 +136,79 @@
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="5">Aucune plainte trouvée.</td>
+        <td colspan="5">No complaints found.</td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-<!-- Espace entre les tableaux -->
+<!-- Space between tables -->
 <div style="margin-top: 2rem;"></div>
 
 <div class="card">
-  <!-- Titre pour le tableau des plaintes groupées par targetUser -->
-  <h2 class="table-title">Plaintes Groupées par Conducteur Ciblé</h2>
+  <!-- Title for the grouped complaints table -->
+  <h2 class="table-title">Complaints Grouped by Targeted User</h2>
   <hr class="divider" />
 
-  <!-- Tableau avec Row Expansion -->
-  <p-table [value]="complaintsGroupedByTargetUser" dataKey="targetUser.id" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
-    <!-- En-tête du tableau -->
+  <!-- Table with Row Expansion -->
+  <p-table [value]="complaintsGroupedByTargetUser" dataKey="targetUser.id" [paginator]="true" [rows]="3" [rowsPerPageOptions]="[3, 5, 10]">
+    <!-- Table header -->
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 15%;">Conducteur Ciblé</th>
-        <th style="width: 10%;">Rôle</th>
-        <th style="width: 10%;">Statut</th>
-        <th style="width: 10%;">Nombre de Plaintes</th>
+        <th style="width: 15%;">Targeted Driver</th>
+        <th style="width: 10%;">Role</th>
+        <th style="width: 10%;">Status</th>
+        <th style="width: 10%;">Number of Complaints</th>
         <th style="width: 55%;">Actions</th>
       </tr>
     </ng-template>
 
-    <!-- Corps du tableau -->
+    <!-- Table body -->
     <ng-template pTemplate="body" let-group let-expanded="expanded">
       <tr>
-        <!-- Colonne Conducteur Ciblé -->
+        <td>{{ group.targetUser.firstname }} {{ group.targetUser.lastname }}</td>
         <td>
-          {{ group.targetUser.firstname }} {{ group.targetUser.lastname }}
+          <p-tag>{{ group.targetUser.role }}</p-tag>
         </td>
-
-        <!-- Colonne Rôle -->
-        <td>
-          <p-tag >
-            {{ group.targetUser.role }}
-          </p-tag>
-        </td>
-
-        <!-- Colonne Statut -->
         <td>
           <p-tag [severity]="group.targetUser.status ? 'success' : 'danger'">
-            {{ group.targetUser.status ? 'Actif' : 'Bloqué' }}
+            {{ group.targetUser.status ? 'Active' : 'Blocked' }}
           </p-tag>
         </td>
-
-        <!-- Colonne Nombre de Plaintes -->
+        <td>{{ group.count }}</td>
         <td>
-          {{ group.count }}
-        </td>
 
-        <!-- Colonne Actions -->
-        <td>
           <button
             pButton
             type="button"
-            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-            (click)="toggleRow(group)"
-            class="p-button-text p-button-sm"
-          ></button>
-          <button
-            pButton
-            type="button"
-            [label]="group.targetUser.status ? 'Bloquer' : 'Activer'"
+            [label]="group.targetUser.status ? 'Block' : 'Activate'"
             [severity]="group.targetUser.status ? 'danger' : 'success'"
             (click)="toggleUserStatus(group.targetUser)"
           ></button>
           <button
             pButton
             type="button"
-            label="Voir les détails"
+            label="View Details"
             severity="info"
             (click)="showComplaintsDetails(group.complaints)"
           ></button>
         </td>
       </tr>
     </ng-template>
-    <!-- Détails de la ligne (Row Expansion) -->
+    <!-- Row expansion details -->
     <ng-template pTemplate="rowexpansion" let-group>
       <tr>
         <td colspan="5">
           <div class="p-grid p-nogutter">
             <div class="p-col-12">
-              <h4>Liste des Plaintes</h4>
+              <h4>Complaint List</h4>
               <p-table [value]="group.complaints" [responsive]="true">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Description</th>
-                    <th>Plaignant</th>
+                    <th>Complainer</th>
                     <th>Date</th>
-                    <th>Statut</th>
+                    <th>Status</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-complaint>
@@ -263,14 +233,14 @@
 </div>
 
 <!-- Dialogue pour afficher les détails des plaintes -->
-<p-dialog header="Détails des Plaintes" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }">
+<p-dialog header="Complaint Details" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }">
   <p-table [value]="selectedComplaints" [responsive]="true">
     <ng-template pTemplate="header">
       <tr>
         <th>Description</th>
-        <th>Plaignant</th>
+        <th>Complainant</th>
         <th>Date</th>
-        <th>Statut</th>
+        <th>Status</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-complaint>
@@ -280,13 +250,14 @@
         <td>{{ complaint.createdAt | date: 'medium' }}</td>
         <td>
           <p-tag [severity]="complaint.resolved ? 'success' : 'danger'">
-            {{ complaint.resolved ? 'Résolue' : 'Non Résolue' }}
+            {{ complaint.resolved ? 'Resolved' : 'Unresolved' }}
           </p-tag>
         </td>
       </tr>
     </ng-template>
   </p-table>
   <ng-template pTemplate="footer">
-    <button pButton type="button" label="Fermer" (click)="closeDialog()" class="p-button-secondary"></button>
+    <button pButton type="button" label="Close" (click)="closeDialog()" class="p-button-secondary"></button>
   </ng-template>
 </p-dialog>
+
