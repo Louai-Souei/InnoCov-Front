@@ -3,6 +3,8 @@ import { Router, Scroll } from '@angular/router';
 import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
 import { UserService } from "../../services/user/user.service";
 import { User } from "../../entity/User";
+import * as Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 
 const ROUTE_TITLES: { [key: string]: string } = {
   '/passenger/available-routes': 'Available Routes',
@@ -21,6 +23,7 @@ const ROUTE_TITLES: { [key: string]: string } = {
 export class PassengerLayoutComponent implements OnInit {
   pageTitle: string = '';
   activeUser: User | undefined;
+  socketClient: any = null;
 
   constructor(
     private router: Router,
@@ -29,11 +32,20 @@ export class PassengerLayoutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.setPageTitle();
+    this.getActiveUser();
+
+  }
+
+  private setPageTitle() {
     this.router.events.subscribe((event) => {
       if (event instanceof Scroll) {
         this.updatePageTitle(event.routerEvent.url);
       }
     });
+  }
+
+  private getActiveUser() {
     this.userService.getActiveUser().subscribe({
       next: (activeUser) => {
         this.activeUser = activeUser.data;
