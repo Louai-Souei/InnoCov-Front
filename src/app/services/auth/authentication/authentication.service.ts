@@ -39,6 +39,10 @@ export class AuthenticationService {
     return localStorage.getItem(this.token);
   }
 
+  getUserId(): string | null {
+    return localStorage.getItem(this.userId);
+  }
+
   clearLocalStorage(): void {
     localStorage.clear();
   }

@@ -3,6 +3,7 @@ import { Router, Scroll } from '@angular/router';
 import { AuthenticationService } from '../../services/auth/authentication/authentication.service';
 import {UserService} from "../../services/user/user.service";
 import {User} from "../../entity/User";
+import {WebSocketService} from "../../services/web-socket/web-socket.service";
 
 const DRIVER_ROUTE_TITLES: { [key: string]: string } = {
   '/driver/tasks': 'Available Tasks',
@@ -24,7 +25,8 @@ export class DriverLayoutComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthenticationService,
-              private userService: UserService) {}
+              private userService: UserService,
+              private webSocketService: WebSocketService) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -40,6 +42,10 @@ export class DriverLayoutComponent implements OnInit {
         console.error('Error fetching active user', err);
       },
     });
+    if (this.authService.getToken()) {
+      // Connexion WebSocket via le service
+      this.webSocketService.connect();
+    }
   }
 
   updatePageTitle(url: string): void {
